@@ -1,0 +1,36 @@
+<div class="dashboard ">
+	<div class="dashboard-nav w-100">
+		<header>			
+			<a href="#" class="brand-logo">
+				<img src="/assets/UTC21.ico"  alt="">
+				<span>UTC2</span>
+			</a>
+		</header>
+		
+		<nav class="dashboard-nav-list">
+			<!--<a routerLink="/mobile" routerLinkActive="actived" [routerLinkActiveOptions]="{exact: true}" class="dashboard-nav-item" >
+				<span><i class="fas fa-home"></i></span> Thông tin 
+			</a>-->
+			<a routerLink="/mobile" routerLinkActive="actived" [routerLinkActiveOptions]="{exact: true}" class="dashboard-nav-item">
+				<span><i class="fas fa-tachometer-alt"></i></span> Đăng ký học phần 
+			</a>
+
+			<a routerLink="/mobile/lay-id-hoc-phan" routerLinkActive="actived" [routerLinkActiveOptions]="{exact: true}" class="dashboard-nav-item">
+				<span><i class="fas fa-file-upload"></i></span> Lấy id học phần
+			</a>
+			
+			<a href="#" class="dashboard-nav-item">
+				<span><i class="fas fa-cogs"></i></span> Hủy đăng ký học phần
+			</a>
+
+			<!--<a href="#" class="dashboard-nav-item">
+				<span><i class="fas fa-user"></i></span> Profile
+			</a>-->
+
+			<div class="nav-item-divider"></div>
+			<a routerLink="/" class="dashboard-nav-item">
+				<span><i class="fas fa-sign-out-alt"></i></span> Logout
+			</a>
+		</nav>
+	</div>
+</div>

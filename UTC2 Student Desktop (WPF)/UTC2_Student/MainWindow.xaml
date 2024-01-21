@@ -1,0 +1,144 @@
+﻿<Window x:Class="UTC2_Student.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UTC2_Student"
+        mc:Ignorable="d"
+        Title="Đại học Giao thông Vận tải PH tại TP. Hồ Chí Minh" 
+        Height="650" Width="1100"
+        MinWidth="400" MinHeight="500"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        
+        <Style x:Key="menuItem" TargetType="RadioButton">
+            <Setter Property="Margin" Value="0,0,10,0"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Cursor" Value="Hand"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"></ContentPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="textMenuItem" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Wheat"></Setter>
+            <Style.Triggers>
+                <!--<Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#3399FF"></Setter>
+                </Trigger>-->
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0.1" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" To="#3399FF"></ColorAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0.1" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" To="Wheat"></ColorAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Background="#271756">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" 
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
+
+                <Image Width="40" 
+                       Source="\Resources\Images\profile.png"
+                       Margin="10,0,0,0"></Image>
+
+                <TextBlock Text="Hồ Vĩnh Tín"
+                        FontSize="25" 
+                           Margin="10,0,0,0"
+                           Foreground="White"></TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" 
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right">
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="Thông báo / Tin tức"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="ĐKHP"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="Học phí / KTX"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="Hóa đơn"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="Lịch thi"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="KTX"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="Điểm"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuItem}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource textMenuItem}" Text="TKB"></TextBlock>
+                    </StackPanel>
+                </RadioButton>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
