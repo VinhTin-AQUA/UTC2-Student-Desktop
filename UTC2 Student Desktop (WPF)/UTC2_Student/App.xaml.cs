@@ -13,8 +13,8 @@ namespace UTC2_Student
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //WindowStore.LoginView.Show();
-            WindowStore.MainWindow.Show();
+            WindowStore.LoginView.Show();
+            //WindowStore.MainWindow.Show();
         }
     }
 
