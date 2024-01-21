@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows;
 using UTC2_Student.MVVM.Views;
+using UTC2_Student.Stores;
 
 namespace UTC2_Student
 {
@@ -12,11 +13,8 @@ namespace UTC2_Student
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //LoginView loginView = new LoginView();
-            //loginView.Show();
-
-            MainWindow mainView = new MainWindow();
-            mainView.Show();
+            //WindowStore.LoginView.Show();
+            WindowStore.MainWindow.Show();
         }
     }
 

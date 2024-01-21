@@ -16,10 +16,7 @@
 
   <ItemGroup>
     <Folder Include="MVVM\Models\" />
-    <Folder Include="MVVM\Core\" />
-    <Folder Include="MVVM\ViewModels\" />
     <Folder Include="Resources\Styles\" />
-    <Folder Include="Stores\" />
   </ItemGroup>
 
   <ItemGroup>

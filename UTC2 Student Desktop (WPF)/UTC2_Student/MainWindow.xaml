@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UTC2_Student"
+        xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels"
+        xmlns:view="clr-namespace:UTC2_Student.MVVM.Views"
         mc:Ignorable="d"
         Title="Đại học Giao thông Vận tải PH tại TP. Hồ Chí Minh" 
         Height="650" Width="1100"
@@ -54,8 +56,51 @@
                 
             </Style.Triggers>
         </Style>
-        
+
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></BooleanToVisibilityConverter>
+
+        <DataTemplate DataType="{x:Type viewModel:DiemViewModel}">
+            <view:DiemView></view:DiemView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:NotificationViewModel}">
+            <view:Notification></view:Notification>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DKHPViewModel}">
+            <view:DKHPView></view:DKHPView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HoaDonViewModel}">
+            <view:HoaDonView></view:HoaDonView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HocPhiViewModel}">
+            <view:HocPhiView></view:HocPhiView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:KTXViewModel}">
+            <view:KTXView></view:KTXView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:LichThiViewModel}">
+            <view:LichThiView></view:LichThiView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:TKBViewModel}">
+            <view:TKBView></view:TKBView>
+        </DataTemplate>
+
     </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsShowed" Mode="TwoWay" Converter="{StaticResource booleanToVisibilityConverter}"></Binding>
+    </Window.Visibility>
+
+    <Window.DataContext>
+        <viewModel:MainViewModel></viewModel:MainViewModel>
+    </Window.DataContext>
+    
     
     <Grid>
         <Grid.RowDefinitions>
@@ -90,49 +135,57 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Right">
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateNotifycationCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="Thông báo / Tin tức"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateDKHPCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="ĐKHP"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateHocPhiCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="Học phí / KTX"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateHoaDonCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="Hóa đơn"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateLichThiCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="Lịch thi"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateKTXCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="KTX"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateDiemCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="Điểm"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuItem}">
+                <RadioButton Style="{StaticResource menuItem}"
+                             Command="{Binding NavigateTKBCommand}">
                     <StackPanel>
                         <TextBlock Style="{StaticResource textMenuItem}" Text="TKB"></TextBlock>
                     </StackPanel>
@@ -140,5 +193,12 @@
 
             </StackPanel>
         </Grid>
+
+
+        <UserControl Grid.Row="1"
+                     Content="{Binding CurrntChildView}">
+            
+        </UserControl>
+        
     </Grid>
 </Window>

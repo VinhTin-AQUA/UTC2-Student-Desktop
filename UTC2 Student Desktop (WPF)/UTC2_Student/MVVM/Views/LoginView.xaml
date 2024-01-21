@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
+        xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels"
         mc:Ignorable="d"
         Title="Đăng nhập UTC2" 
         Height="650" Width="1100"
@@ -41,7 +42,18 @@
             </Setter>
         </Style>
 
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+        
     </Window.Resources>
+
+    <Window.DataContext>
+        <viewModel:LoginViewModel></viewModel:LoginViewModel>
+    </Window.DataContext>
+
+    <Window.Visibility>
+        <Binding Path="IsShowed" Mode="TwoWay" Converter="{StaticResource booleanToVisibilityConverter}"></Binding>
+    </Window.Visibility>
+
 
     <Grid>
         <Border Style="{StaticResource backImage}">
@@ -54,7 +66,8 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Grid.Row="1" 
+                        HorizontalAlignment="Center"                       VerticalAlignment="Center">
                 <TextBlock Text="PHÂN HIỆU ĐẠI HỌC GIAO THÔNG VẬN TẢI"
                             TextAlignment="Center"
                             VerticalAlignment="Center"
@@ -72,13 +85,15 @@
                            Foreground="#271756" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
-            <WrapPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Grid  Width="300" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <WrapPanel Grid.Row="2" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid  Width="300" 
+                       VerticalAlignment="Center"                       HorizontalAlignment="Center">
                     <Image Width="270" Source="/Resources/Images/UTC2_logo.png"></Image>
                 </Grid>
                 
-                <StackPanel Width="300" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center">
-
+                <StackPanel Width="300" 
+                            Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center">
 
                     <TextBlock Style="{StaticResource textBlock}" Text="Mã số sinh viên"></TextBlock>
                     <TextBox Style="{StaticResource textBox}">
@@ -87,7 +102,9 @@
                     <TextBlock Style="{StaticResource textBlock}" Text="Mật khẩu"></TextBlock>
                     <TextBox Style="{StaticResource textBox}"></TextBox>
 
-                    <Button Style="{StaticResource btnLogin}" Content="Đăng nhập"></Button>
+                    <Button Style="{StaticResource btnLogin}" 
+                            Content="Đăng nhập"
+                            Command="{Binding LoginCommand}"></Button>
 
                 </StackPanel>
             </WrapPanel>
