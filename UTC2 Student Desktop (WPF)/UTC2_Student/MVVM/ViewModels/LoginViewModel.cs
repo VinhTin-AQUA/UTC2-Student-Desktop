@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UTC2_Student.API;
 using UTC2_Student.MVVM.Core;
 using UTC2_Student.Repositories;
 using UTC2_Student.Stores;
@@ -62,11 +63,23 @@ namespace UTC2_Student.MVVM.ViewModels
 
         private async Task ExecuteLoginCommand(object obj)
         {
+            if(ApiHelper.CheckForInternetConnection() == false)
+            {
+                ErrorMessage = "Vui lòng kết nối Enternet !!!";
+                return;
+            } 
+
             CanLogin = false;
             var response =  await ApiRepository.Ins.Login(MSSV, Password);
-            var content = await response.Content.ReadAsStringAsync();
 
             CanLogin = true;
+
+            if(response == null)
+            {
+                ErrorMessage = "Vui lòng kết nối Enternet !!!";
+                return;
+            }
+
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 ErrorMessage = "Tài khoảng hoặc mật khẩu không chính xác";

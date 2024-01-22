@@ -109,8 +109,22 @@ namespace UTC2_Student.Repositories
                 {
                     response = await httpCLient.PostAsync(loginUrl, jsonContext);
 
-                    if (response.StatusCode == HttpStatusCode.Unauthorized ||
-                        response.StatusCode == HttpStatusCode.OK)
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+
+                        try
+                        {
+                            AuthModel.Instance = JsonConvert.DeserializeObject<AuthModel>(content);
+                        }
+                        catch
+                        {
+                            return null;
+                        }
+                        return response;
+                    }
+
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         return response;
                     }

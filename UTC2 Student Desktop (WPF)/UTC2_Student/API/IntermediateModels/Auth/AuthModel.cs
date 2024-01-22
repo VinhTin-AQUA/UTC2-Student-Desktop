@@ -15,6 +15,7 @@ namespace UTC2_Student.Repositories.IntermediateModels.Auth
         public Information[] result { get; set; }
         public string v { get; set; }
 
+
         // private: ngăn chặn đối tượng từ bên ngoài
         private AuthModel()
         {
