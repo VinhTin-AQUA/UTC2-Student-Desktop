@@ -4,12 +4,109 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
+             xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels"
+             xmlns:view="clr-namespace:UTC2_Student.MVVM.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Green">
-        <TextBlock Text="Học phí"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               FontSize="30"></TextBlock>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <view:CurrencyConverter x:Key="currencyConverter"></view:CurrencyConverter>
+
+        <Style x:Key="tongTienContainer" TargetType="StackPanel">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Background" Value="#fef9c3"></Setter>
+            <Setter Property="Width" Value="150"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+        </Style>
+
+        <Style x:Key="titleTongTien" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Foreground" Value="#271756"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+
+    <Grid Background="white">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="Kết quả nộp tiền" 
+                       FontSize="20"
+                       Foreground="#271756"
+                       FontWeight="Bold" ></TextBlock>
+        </StackPanel>
+
+        <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="#271756">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" 
+                Style="{StaticResource tongTienContainer}">
+                    <TextBlock Style="{StaticResource titleTongTien}" Text="Đã nộp"></TextBlock>
+                    <TextBlock TextAlignment="Center" FontSize="15" Foreground="#271756" Text="{Binding HocPhiDaThu, Converter={StaticResource currencyConverter}}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                Style="{StaticResource tongTienContainer}">
+
+                    <TextBlock Style="{StaticResource titleTongTien}" Text="Phải nộp"></TextBlock>
+
+                    <TextBlock TextAlignment="Center" FontSize="15" Foreground="#dc2626" Text="{Binding HocPhiPhaiNop, Converter={StaticResource currencyConverter}}"></TextBlock>
+
+                </StackPanel>
+            </Grid>
+
+        </Border>
+        
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding HocPhiModels, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#271756" 
+                        BorderThickness="1" 
+                        Background="White" 
+                        Margin="20,5,20,5"
+                                Padding="10">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                                    <TextBlock FontWeight="bold" Text="Ngày đóng: "></TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding NGAY_DKY}"></TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                                    <TextBlock FontWeight="bold" Text="Số tiền: "></TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding PHAI_THU, Converter={StaticResource currencyConverter}}"></TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                                    <TextBlock FontWeight="bold" Text="Hình thức: "></TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding THU_TIEN}"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

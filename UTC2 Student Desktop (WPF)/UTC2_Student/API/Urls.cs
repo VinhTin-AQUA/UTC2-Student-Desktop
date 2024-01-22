@@ -10,28 +10,36 @@ namespace UTC2_Student.API
     public static class Urls
     {
         #region DKHP
-        public static string baseApi { get; set; } = "http://apiportalstudent7mobile.utc2.edu.vn/api/v1";
+        private static string baseApi { get; set; } = "http://apiportalstudent7mobile.utc2.edu.vn/api/v1";
+        private static string loginApi { get; set; } = "/auth/login";
 
-        public static string loginApi { get; set; } = "/auth/login";
-
-        public static string dSDotDKApi { get; set; } = "/DangKy_MonHoc";
-        public static string ketQuaDKApi { get; set; } = "/Partial_DanhSachDaDK";
-        public static string danhSachHocPhanApi { get; set; } = "/DanhSach_MonHoc_KNAndMH";
-        public static string dangKyApi { get; set; } = "/Luu_KetQuaDangKy";
+        private static string dSDotDKApi { get; set; } = "/DangKy_MonHoc";
+        private static string ketQuaDKApi { get; set; } = "/Partial_DanhSachDaDK";
+        private static string danhSachHocPhanApi { get; set; } = "/DanhSach_MonHoc_KNAndMH";
+        private static string dangKyApi { get; set; } = "/Luu_KetQuaDangKy";
         #endregion
 
         #region thong bao
 
-        public static string baseWebApi { get; set; } = "https://utc2.edu.vn/api/v1.0";
+        private static string baseWebApi { get; set; } = "https://utc2.edu.vn/api/v1.0";
 
-        public static string getThongBaoApi { get; set; } = "/post";
+        private static string getThongBaoApi { get; set; } = "/post";
 
-        public static string getThongBaoWeb { get; set; } = "https://utc2.edu.vn/sinh-vien/thong-bao/";
+        private static string getThongBaoWeb { get; set; } = "https://utc2.edu.vn/sinh-vien/thong-bao/";
 
         #endregion
 
 
+        #region hoc phi
+        private static string hocPhiBaseApi { get; set; } = "http://apihocphinew.utc2.edu.vn";
 
+        private static string getHocPhiApi { get; set; } = "/Service_NotificationSV.svc/GetAllHocPhiBySV";
+        // http://apihocphinew.utc2.edu.vn/Service_NotificationSV.svc/GetAllHocPhiBySV
+
+        #endregion
+
+
+        #region DKHP
         public static string LoginApi()
         {
             return baseApi + loginApi;
@@ -77,6 +85,10 @@ namespace UTC2_Student.API
             return baseApi + dangKyApi;
         }
 
+        #endregion
+
+        #region thong bao
+
         public static string GetThongBaoApi(int currentPage = 1, int pageSize = 10)
         {
             string sortField = "created_at";
@@ -84,7 +96,7 @@ namespace UTC2_Student.API
             string filters = "type%3D%3DSTUDENT_ANNOUNCEMENT%2Cdisplay%3D%3Dtrue%2C%20%20";
             string subCategorys = "";
 
-            string _params = $@"?currentPage={currentPage}&pageSize={pageSize}&sortField={sortField}&sortOrder={sortOrder}&filters={filters}&subCategorys={subCategorys}"; 
+            string _params = $@"?currentPage={currentPage}&pageSize={pageSize}&sortField={sortField}&sortOrder={sortOrder}&filters={filters}&subCategorys={subCategorys}";
 
             return baseWebApi + getThongBaoApi + _params;
         }
@@ -93,5 +105,17 @@ namespace UTC2_Student.API
         {
             return getThongBaoWeb + url;
         }
+
+        #endregion
+
+        #region hocPhi
+
+        public static string GetHocPhiApi()
+        {
+            return hocPhiBaseApi + getHocPhiApi;
+        }
+
+        #endregion
+
     }
 }

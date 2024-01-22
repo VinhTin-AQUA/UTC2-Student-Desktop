@@ -40,7 +40,6 @@ namespace UTC2_Student.MVVM.ViewModels
         public ICommand NavigateNotifycationCommand {  get; set; }
         public ICommand NavigateDKHPCommand {  get; set; }
         public ICommand NavigateHocPhiCommand { get; set; }
-        public ICommand NavigateHoaDonCommand { get; set; }
         public ICommand NavigateLichThiCommand { get; set; }
         public ICommand NavigateKTXCommand { get; set; }
         public ICommand NavigateDiemCommand { get; set; }
@@ -54,7 +53,6 @@ namespace UTC2_Student.MVVM.ViewModels
             NavigateNotifycationCommand = new RelayCommand(ExecuteNavigateNotifycationCommand);
             NavigateDKHPCommand = new RelayCommand(ExecuteNavigateDKHPCommand);
             NavigateHocPhiCommand = new RelayCommand(ExecuteNavigateHocPhiCommand);
-            NavigateHoaDonCommand = new RelayCommand(ExecuteNavigateHoaDonCommand);
             NavigateLichThiCommand = new RelayCommand(ExecuteNavigateHLichThiCommand);
             NavigateKTXCommand = new RelayCommand(ExecuteNavigateKTXCommand);
             NavigateDiemCommand = new RelayCommand(ExecuteNavigateDiemCommand);
@@ -82,11 +80,6 @@ namespace UTC2_Student.MVVM.ViewModels
         private void ExecuteNavigateHocPhiCommand(object obj)
         {
             CurrntChildView = new HocPhiViewModel();
-        }
-
-        private void ExecuteNavigateHoaDonCommand(object obj)
-        {
-            CurrntChildView = new HoaDonViewModel();
         }
 
         private void ExecuteNavigateHLichThiCommand(object obj)

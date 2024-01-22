@@ -18,17 +18,17 @@ namespace UTC2_Student
     {
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
-            //Init();
-            //if(await CheckLogin() == false)
-            //{
-            //    WindowStore.LoginView.Show();
-            //}
-            //else
-            //{
-            //    WindowStore.MainWindow.Show();
-            //}
+            Init();
+            if (await CheckLogin() == false)
+            {
+                WindowStore.LoginView.Show();
+            }
+            else
+            {
+                WindowStore.MainWindow.Show();
+            }
 
-            WindowStore.MainWindow.Show();
+            //WindowStore.MainWindow.Show();
         }
 
         private void Init()

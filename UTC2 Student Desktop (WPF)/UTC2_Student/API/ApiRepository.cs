@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using UTC2_Student.API;
+using UTC2_Student.API.IntermediateModels.HocPhi;
 using UTC2_Student.API.IntermediateModels.NotificationResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
@@ -38,6 +40,8 @@ namespace UTC2_Student.Repositories
         {
         }
 
+
+        #region DKHP
         public async Task<HttpResponseMessage> GetDanhSachHocPhan(int idMonHoc)
         {
             using (var http = new HttpClient())
@@ -51,7 +55,6 @@ namespace UTC2_Student.Repositories
                 return response;
             }
         }
-
 
         public async Task<HttpResponseMessage> GetDotDK()
         {
@@ -182,6 +185,10 @@ namespace UTC2_Student.Repositories
             return null;
         }
 
+        #endregion
+
+
+        #region thong bao
 
         public async Task<NotificationResponse> GetThongBaos(int currentPage = 1)
         {
@@ -192,7 +199,7 @@ namespace UTC2_Student.Repositories
 
                 var content = await response.Content.ReadAsStringAsync();
 
-                if(response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     NotificationResponse notificationResponse = JsonConvert.DeserializeObject<NotificationResponse>(content);
                     return notificationResponse;
@@ -201,6 +208,42 @@ namespace UTC2_Student.Repositories
                 return null;
             }
         }
+
+        #endregion
+
+
+        #region hoc phi
+
+        public async Task<List<HocPhiModel>> GetAllHocPhi()
+        {
+            var sinhVienId = AuthModel.Instance.result[0].sinhvieN_ID;
+            var maDvQl = AuthModel.Instance.result[0].mA_DVIQLY;
+
+            var payload = new
+            {
+                SINHVIEN_ID = sinhVienId,
+                MA_DVIQLY = maDvQl
+            };
+
+            var jsonCOntent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+            var getAllHocPhiUrl = Urls.GetHocPhiApi();
+            using (var httpCLient = new HttpClient())
+            {
+                HttpResponseMessage response = await httpCLient.PostAsync(getAllHocPhiUrl, jsonCOntent);
+                var content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\\/", "/");
+                var r = content.Remove(0, 1);
+                r = r.Remove(r.Length - 1);
+                r = r.Replace("\\", "");
+               
+                List<HocPhiModel> hocPhis = JsonConvert.DeserializeObject<List<HocPhiModel>>(r);
+                return hocPhis;
+            }
+        }
+
+        #endregion
+
+
 
         //public async Task<string> DangKy(TimeSpan timeSpan, List<int> ids)
         //{

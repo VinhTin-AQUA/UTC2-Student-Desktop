@@ -9,5 +9,6 @@ namespace UTC2_Student.MVVM.ViewModels
 {
     public class LichThiViewModel : ViewModelBase
     {
+
     }
 }

@@ -28,10 +28,6 @@
             <view:DKHPView></view:DKHPView>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:HoaDonViewModel}">
-            <view:HoaDonView></view:HoaDonView>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewModel:HocPhiViewModel}">
             <view:HocPhiView></view:HocPhiView>
         </DataTemplate>
@@ -57,7 +53,6 @@
     <Window.DataContext>
         <viewModel:MainViewModel></viewModel:MainViewModel>
     </Window.DataContext>
-    
     
     <Grid>
         <Grid.RowDefinitions>
@@ -111,13 +106,6 @@
                              Command="{Binding NavigateHocPhiCommand}">
                     <StackPanel>
                         <TextBlock Text="Học phí / KTX"></TextBlock>
-                    </StackPanel>
-                </RadioButton>
-
-                <RadioButton Style="{StaticResource menuItem}"
-                             Command="{Binding NavigateHoaDonCommand}">
-                    <StackPanel>
-                        <TextBlock Text="Hóa đơn"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
