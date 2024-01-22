@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--Font Colors-->
+    <Color x:Key="textMenuItemColorActivated">#3399FF</Color>
+    <Color x:Key="textMenuItemColor">Wheat</Color>
+
+    <SolidColorBrush x:Key="menuColor" Color="Wheat"></SolidColorBrush>
+    <SolidColorBrush x:Key="menuColorActivated" Color="#3399FF"></SolidColorBrush>
+
+    <!--background colros-->
+    <SolidColorBrush x:Key="headerColor" Color="#271756"></SolidColorBrush>
+
+</ResourceDictionary>

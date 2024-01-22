@@ -13,49 +13,6 @@
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        
-        <Style x:Key="menuItem" TargetType="RadioButton">
-            <Setter Property="Margin" Value="0,0,10,0"></Setter>
-            <Setter Property="FontSize" Value="15"></Setter>
-            <Setter Property="BorderThickness" Value="0"></Setter>
-            <Setter Property="Cursor" Value="Hand"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"></ContentPresenter>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="textMenuItem" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="Wheat"></Setter>
-            <Style.Triggers>
-                <!--<Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#3399FF"></Setter>
-                </Trigger>-->
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation Duration="0:0:0.1" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" To="#3399FF"></ColorAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation Duration="0:0:0.1" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" To="Wheat"></ColorAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-                
-            </Style.Triggers>
-        </Style>
 
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></BooleanToVisibilityConverter>
 
@@ -124,7 +81,7 @@
                        Source="\Resources\Images\profile.png"
                        Margin="10,0,0,0"></Image>
 
-                <TextBlock Text="Hồ Vĩnh Tín"
+                <TextBlock Text="{Binding UserName}"
                         FontSize="25" 
                            Margin="10,0,0,0"
                            Foreground="White"></TextBlock>
@@ -136,58 +93,59 @@
                         HorizontalAlignment="Right">
 
                 <RadioButton Style="{StaticResource menuItem}"
-                             Command="{Binding NavigateNotifycationCommand}">
+                             Command="{Binding NavigateNotifycationCommand}"
+                             IsChecked="True">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="Thông báo / Tin tức"></TextBlock>
+                        <TextBlock Text="Thông báo"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource menuItem}"
                              Command="{Binding NavigateDKHPCommand}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="ĐKHP"></TextBlock>
+                        <TextBlock Text="ĐKHP"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource menuItem}"
                              Command="{Binding NavigateHocPhiCommand}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="Học phí / KTX"></TextBlock>
+                        <TextBlock Text="Học phí / KTX"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource menuItem}"
                              Command="{Binding NavigateHoaDonCommand}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="Hóa đơn"></TextBlock>
+                        <TextBlock Text="Hóa đơn"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource menuItem}"
                              Command="{Binding NavigateLichThiCommand}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="Lịch thi"></TextBlock>
+                        <TextBlock Text="Lịch thi"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource menuItem}"
                              Command="{Binding NavigateKTXCommand}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="KTX"></TextBlock>
+                        <TextBlock Text="KTX"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource menuItem}"
                              Command="{Binding NavigateDiemCommand}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="Điểm"></TextBlock>
+                        <TextBlock Text="Điểm"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource menuItem}"
                              Command="{Binding NavigateTKBCommand}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource textMenuItem}" Text="TKB"></TextBlock>
+                        <TextBlock Text="TKB"></TextBlock>
                     </StackPanel>
                 </RadioButton>
 

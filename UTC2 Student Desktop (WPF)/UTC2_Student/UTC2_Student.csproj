@@ -16,10 +16,10 @@
 
   <ItemGroup>
     <Folder Include="MVVM\Models\" />
-    <Folder Include="Resources\Styles\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

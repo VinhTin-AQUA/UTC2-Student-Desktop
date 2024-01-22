@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using UTC2_Student.API;
+using UTC2_Student.API.IntermediateModels.NotificationResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
 namespace UTC2_Student.Repositories
@@ -22,13 +23,13 @@ namespace UTC2_Student.Repositories
 
         public static ApiRepository Ins
         {
-            get 
-            { 
-                if(_ins == null)
+            get
+            {
+                if (_ins == null)
                 {
                     _ins = new ApiRepository();
                 }
-                return _ins; 
+                return _ins;
             }
         }
 
@@ -45,7 +46,7 @@ namespace UTC2_Student.Repositories
                 // đính kèm header
                 http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
 
-                string danhSachMonHocDangKyUrl = Urls.DanhSachHocPhanUrl(AuthModel.Instance, idMonHoc);
+                string danhSachMonHocDangKyUrl = Urls.DanhSachHocPhanApi(AuthModel.Instance, idMonHoc);
                 HttpResponseMessage response = await http.GetAsync(danhSachMonHocDangKyUrl);
                 return response;
             }
@@ -60,7 +61,7 @@ namespace UTC2_Student.Repositories
                 // đính kèm header
                 httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
 
-                string dotDKUrl = Urls.DSDotDKUrl(AuthModel.Instance);
+                string dotDKUrl = Urls.DSDotDKApi(AuthModel.Instance);
 
                 // goi api
                 HttpResponseMessage response = await httpCLient.GetAsync(dotDKUrl);
@@ -77,7 +78,7 @@ namespace UTC2_Student.Repositories
                 // đính kèm header
                 httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
 
-                string ketQuaDKUrl = Urls.KetQuaDKUrl(AuthModel.Instance, id_dot_DK);
+                string ketQuaDKUrl = Urls.KetQuaDKApi(AuthModel.Instance, id_dot_DK);
 
                 // goi api
                 HttpResponseMessage response = await httpCLient.GetAsync(ketQuaDKUrl);
@@ -90,7 +91,7 @@ namespace UTC2_Student.Repositories
             using (var httpCLient = new HttpClient())
             {
                 httpCLient.Timeout = TimeSpan.FromDays(10);
-                string loginUrl = Urls.LoginUrl();
+                string loginUrl = Urls.LoginApi();
                 var loginInfo = new { Email = mssv, Password = pass };
 
                 LoginModel.Instance.MSSV = mssv;
@@ -143,7 +144,7 @@ namespace UTC2_Student.Repositories
                 using (var httpCLient = new HttpClient())
                 {
                     httpCLient.Timeout = TimeSpan.FromDays(10);
-                    string dangKyUrl = Urls.DangKyUrl();
+                    string dangKyUrl = Urls.DangKyApi();
 
                     var payload = new
                     {
@@ -179,6 +180,26 @@ namespace UTC2_Student.Repositories
                 }
             }
             return null;
+        }
+
+
+        public async Task<NotificationResponse> GetThongBaos(int currentPage = 1)
+        {
+            using (var httpCLient = new HttpClient())
+            {
+                var url = Urls.GetThongBaoApi(currentPage, 20);
+                var response = await httpCLient.GetAsync(url);
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if(response.StatusCode == HttpStatusCode.OK)
+                {
+                    NotificationResponse notificationResponse = JsonConvert.DeserializeObject<NotificationResponse>(content);
+                    return notificationResponse;
+                };
+
+                return null;
+            }
         }
 
         //public async Task<string> DangKy(TimeSpan timeSpan, List<int> ids)

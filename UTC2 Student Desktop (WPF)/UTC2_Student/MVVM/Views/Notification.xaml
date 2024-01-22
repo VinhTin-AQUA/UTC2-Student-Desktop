@@ -4,12 +4,160 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
+             xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels"
+             xmlns:view="clr-namespace:UTC2_Student.MVVM.Views"
+             
+              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:faMaterial="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp.material"
+            
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Green">
-        <TextBlock Text="Thông báo tin tức"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               FontSize="30"></TextBlock>
+
+    <UserControl.DataContext>
+        <viewModel:NotificationViewModel></viewModel:NotificationViewModel>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+
+        <view:DateConverter x:Key="dateConverter"></view:DateConverter>
+
+        <Style x:Key="tbl" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="LineHeight" Value="30"></Setter>
+        </Style>
+
+        <Style x:Key="btn" TargetType="Button">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <fa:IconImage x:Name="icon" Width="15" Icon="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" />
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource menuColorActivated}"/>
+                                <Setter TargetName="icon" Property="Foreground" Value="#2563eb"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#d9f99d"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="title" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+
+        <Style x:Key="update" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="Foreground" Value="#1d4ed8"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+        
+    </UserControl.Resources>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Danh sách thông báo"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Grid.Column="0"
+                       FontSize="20"
+                       Margin="10,0,0,0"></TextBlock>
+
+            <WrapPanel Orientation="Horizontal"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Grid.Column="1">
+
+                <Button Style="{StaticResource btn}" 
+                        Tag="AngleLeft"
+                        Command="{Binding PrevPageCommand}">
+                </Button>
+
+                <TextBlock Style="{StaticResource tbl}" Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></TextBlock>
+
+                <TextBlock Style="{StaticResource tbl}" Text="/"></TextBlock>
+
+                <TextBlock Style="{StaticResource tbl}" Text="{Binding TotalPages, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></TextBlock>
+
+                <Button Style="{StaticResource btn}" 
+                        Tag="AngleRight"
+                        Margin="0,0,15,0"
+                        Command="{Binding NextPageCommand}"></Button>
+
+            </WrapPanel>
+        </Grid>
+
+        <Border Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="{StaticResource headerColor}"></Border>
+
+        <Grid Grid.Row="2">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Notices, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Black" 
+                                    BorderThickness="0,0,0,1" 
+                                    Background="White" 
+                                    Margin="20,5,20,5">
+
+                                <Button Background="Transparent" 
+                                         Padding="10"
+                                        HorizontalContentAlignment="Left"
+                                        BorderThickness="0" Cursor="Hand"
+                                        Tag="{Binding seo_text}"
+                                        Click="Button_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground" Value="#1d4ed8"></Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    
+                                    <StackPanel>
+                                        <TextBlock x:Name="title" Style="{StaticResource title}" Text="{Binding title}"></TextBlock>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock TextWrapping="Wrap" Text="Cập nhật vào lúc: "></TextBlock>
+                                            <TextBlock Style="{StaticResource update}" Text="{Binding updated_at, Converter={StaticResource dateConverter}}"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
     </Grid>
 </UserControl>

@@ -5,14 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UTC2_Student.API.IntermediateModels.NotificationResponses;
 using UTC2_Student.MVVM.Core;
+using UTC2_Student.Repositories;
+using UTC2_Student.Repositories.IntermediateModels.Auth;
 
 namespace UTC2_Student.MVVM.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        #region properties
         private bool isShowed;
         private ViewModelBase _currentChildView;
+        private string userName;
 
         public bool IsShowed
         {
@@ -26,6 +31,12 @@ namespace UTC2_Student.MVVM.ViewModels
             set { _currentChildView = value; OnPropertyChanged(); }
         }
 
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; OnPropertyChanged(); }
+        }
+
         public ICommand NavigateNotifycationCommand {  get; set; }
         public ICommand NavigateDKHPCommand {  get; set; }
         public ICommand NavigateHocPhiCommand { get; set; }
@@ -35,6 +46,7 @@ namespace UTC2_Student.MVVM.ViewModels
         public ICommand NavigateDiemCommand { get; set; }
         public ICommand NavigateTKBCommand { get; set; }
 
+        #endregion
 
         public MainViewModel()
         {
@@ -47,12 +59,15 @@ namespace UTC2_Student.MVVM.ViewModels
             NavigateKTXCommand = new RelayCommand(ExecuteNavigateKTXCommand);
             NavigateDiemCommand = new RelayCommand(ExecuteNavigateDiemCommand);
             NavigateTKBCommand = new RelayCommand(ExecuteNavigateTKBCommand);
-
+            //UserName = AuthModel.Instance.result[0].hodem + AuthModel.Instance.result[0].ten;
 
             // default child view
             CurrntChildView = new NotificationViewModel();
         }
+
         // Execute
+
+        #region commands
 
         private void ExecuteNavigateNotifycationCommand(object obj)
         {
@@ -93,5 +108,6 @@ namespace UTC2_Student.MVVM.ViewModels
         {
             CurrntChildView = new TKBViewModel();
         }
+        #endregion
     }
 }
