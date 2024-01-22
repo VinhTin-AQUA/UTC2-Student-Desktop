@@ -63,17 +63,13 @@ namespace UTC2_Student.MVVM.ViewModels
 
         private async Task ExecuteLoginCommand(object obj)
         {
-            if(ApiHelper.CheckForInternetConnection() == false)
+            CanLogin = false;
+            if (DataHelper.CheckForInternetConnection() == false)
             {
                 ErrorMessage = "Vui lòng kết nối Enternet !!!";
                 return;
             } 
-
-            CanLogin = false;
             var response =  await ApiRepository.Ins.Login(MSSV, Password);
-
-            CanLogin = true;
-
             if(response == null)
             {
                 ErrorMessage = "Vui lòng kết nối Enternet !!!";
@@ -91,6 +87,7 @@ namespace UTC2_Student.MVVM.ViewModels
                 WindowStore.MainWindow.Show();
                 WindowStore.LoginView.Close();
             }
+            CanLogin = true;
         }
 
         private bool CanExecuteLoginCommand(object obj)

@@ -119,13 +119,17 @@ namespace UTC2_Student.Repositories
                         }
                         catch
                         {
+                            DataHelper.ClearData();
                             return null;
                         }
+                        DataHelper.SaveAccount();
+                        DataHelper.SaveAuthModel();
                         return response;
                     }
 
                     if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
+                        DataHelper.ClearData();
                         return response;
                     }
                 }
