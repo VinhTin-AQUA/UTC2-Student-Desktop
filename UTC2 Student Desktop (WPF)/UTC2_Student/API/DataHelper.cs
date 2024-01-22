@@ -76,30 +76,14 @@ namespace UTC2_Student.API
 
         public static void ReadAccount()
         {
-
-            //string path = @"Data\saveJson.json";
-            //string jsonText = File.ReadAllText(path);
-            //Account account = JsonConvert.DeserializeObject<Account>(jsonText);
-            //Console.WriteLine(account.Name);
-            //Console.WriteLine(account.Age);
-            //Console.WriteLine(account.Activated);
-            //account.Memebers.ForEach(m => {
-            //    Console.WriteLine(m);
-            //});
+            string jsonText = File.ReadAllText(AccountDataPath);
+            LoginModel.Instance = JsonConvert.DeserializeObject<LoginModel>(jsonText);
         }
 
         public static void ReadAuthModel()
         {
-
-            //string path = @"Data\saveJson.json";
-            //string jsonText = File.ReadAllText(path);
-            //Account account = JsonConvert.DeserializeObject<Account>(jsonText);
-            //Console.WriteLine(account.Name);
-            //Console.WriteLine(account.Age);
-            //Console.WriteLine(account.Activated);
-            //account.Memebers.ForEach(m => {
-            //    Console.WriteLine(m);
-            //});
+            string jsonText = File.ReadAllText(AuthModelDataPath);
+            AuthModel.Instance = JsonConvert.DeserializeObject<AuthModel>(jsonText);
         }
 
 
