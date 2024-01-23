@@ -341,15 +341,17 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         private void ExecuteLuuIdHocPhanCommand(object obj)
         {
             var hocPhan = new HocPhanDaChon();
-            if (string.IsNullOrEmpty(IdHocPhans[1].id) == true)
+            if (string.IsNullOrEmpty(IdHocPhans[1].Id) == true)
             {
-                hocPhan.id = IdHocPhans[0].id;
-                hocPhan.name = IdHocPhans[0].name;
+                hocPhan.Id = IdHocPhans[0].Id;
+                hocPhan.Name = IdHocPhans[0].Name;
+                hocPhan.Status = "Sẵn sàng đăng ký";
             }
             else
             {
-                hocPhan.id = IdHocPhans[0].id +","+ IdHocPhans[1].id;
-                hocPhan.name = IdHocPhans[0].name + ", "+ IdHocPhans[1].name;
+                hocPhan.Id = IdHocPhans[0].Id + ","+ IdHocPhans[1].Id;
+                hocPhan.Name = IdHocPhans[0].Name + ", "+ IdHocPhans[1].Name;
+                hocPhan.Status = "Sẵn sàng đăng ký";
             }
 
             DataHelper.SaveIdHocPhans(hocPhan);
@@ -359,12 +361,12 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         public void Reset()
         {
             SoLopHocPhanDaChonMoiMon = 0;
-            IdHocPhans[0].id = "";
-            IdHocPhans[0].name = "";
-            IdHocPhans[1].id = "";
-            IdHocPhans[1].name = "";
-            IdHocPhans[2].id = "";
-            IdHocPhans[2].name = "";
+            IdHocPhans[0].Id = "";
+            IdHocPhans[0].Name = "";
+            IdHocPhans[1].Id = "";
+            IdHocPhans[1].Name = "";
+            IdHocPhans[2].Id = "";
+            IdHocPhans[2].Name = "";
         }
     }
 }

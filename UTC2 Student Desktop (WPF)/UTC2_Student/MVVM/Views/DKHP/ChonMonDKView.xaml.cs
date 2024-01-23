@@ -61,8 +61,8 @@ namespace UTC2_Student.MVVM.Views.DKHP
                     chonMonDKViewModel.SoLopHocPhanDaChonMoiMon = 2;
                 } else
                 {
-                    chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon - 1].id = check.Tag.ToString();
-                    chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon - 1].name = check.Content.ToString();
+                    chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon - 1].Id = check.Tag.ToString();
+                    chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon - 1].Name = check.Content.ToString();
                 }
             }
         }
@@ -76,8 +76,8 @@ namespace UTC2_Student.MVVM.Views.DKHP
             } 
             else
             {
-                chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon].id = "";
-                chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon].name = "";
+                chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon].Id = "";
+                chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon].Name = "";
             }
         }
     }

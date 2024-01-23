@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UTC2_Student.MVVM.ViewModels.DKHP;
 
 namespace UTC2_Student.MVVM.Views.DKHP
 {
@@ -23,6 +24,8 @@ namespace UTC2_Student.MVVM.Views.DKHP
         public DangKyView()
         {
             InitializeComponent();
+            DangKyViewModel dataContext = new DangKyViewModel();
+            this.DataContext = dataContext;
         }
     }
 }

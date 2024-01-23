@@ -8,7 +8,9 @@ namespace UTC2_Student.API.IntermediateModels.ApiResponses
 {
     public class HocPhanDaChon
     {
-        public string id {  get; set; }
-        public string name { get; set; }
+        public string Id {  get; set; }
+        public string Name { get; set; }
+
+        public string Status { get; set; }
     }
 }
