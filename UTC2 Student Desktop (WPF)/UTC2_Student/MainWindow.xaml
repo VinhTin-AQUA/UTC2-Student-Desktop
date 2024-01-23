@@ -10,7 +10,8 @@
         Title="Đại học Giao thông Vận tải PH tại TP. Hồ Chí Minh" 
         Height="650" Width="1100"
         MinWidth="400" MinHeight="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="/Resources/Images/UTC2_Icon.ico">
 
     <Window.Resources>
 
