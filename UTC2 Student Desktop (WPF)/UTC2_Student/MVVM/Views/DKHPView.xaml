@@ -4,12 +4,97 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
+             xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels.DKHP"
+             xmlns:view="clr-namespace:UTC2_Student.MVVM.Views.DKHP"
+             xmlns:context="clr-namespace:UTC2_Student.MVVM.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Green">
-        <TextBlock Text="Đăng ký học phần"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               FontSize="30"></TextBlock>
+
+    <UserControl.DataContext>
+        <context:DKHPViewModel></context:DKHPViewModel>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="RadioButton" x:Key="radioButton">
+            <Setter Property="FontSize" Value="17"></Setter>
+            <Setter Property="Background" Value="#fde68a"></Setter>
+            <Setter Property="Foreground" Value="#1d4ed8"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#fbbf24"
+                                BorderThickness="1"
+                                Padding="4"
+                                Margin="5"
+                                Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#1e40af"></Setter>
+                    <Setter Property="Foreground" Value="white"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate DataType="{x:Type viewModel:ChonMonDKViewModel}">
+            <view:ChonMonDKView></view:ChonMonDKView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DangKyViewModel}">
+            <view:DangKyView></view:DangKyView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HuongDanDangKyViewModel}">
+            <view:HuongDanDangKyView></view:HuongDanDangKyView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HuyDangKyViewModel}">
+            <view:HuyDangKyView></view:HuyDangKyView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:KetQuaDKViewModel}">
+            <view:KetQuaDKView></view:KetQuaDKView>
+        </DataTemplate>
+
+    </UserControl.Resources>
+    
+    <Grid Background="white">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"
+                BorderBrush="#1d4ed8"
+                BorderThickness="0,0,1,0">
+            <StackPanel>
+                <RadioButton Style="{StaticResource radioButton}"
+                             Content="Kết quả đăng ký"
+                             IsChecked="True"
+                             Command="{Binding NavigateKQDK}"></RadioButton>
+                <RadioButton Style="{StaticResource radioButton}" 
+                             Content="Chọn môn đăng ký"
+                             Command="{Binding NavigateChonMon}"></RadioButton>
+                <RadioButton Style="{StaticResource radioButton}" 
+                             Content="Đăng ký"
+                             Command="{Binding NavigateDK}"></RadioButton>
+                <RadioButton Style="{StaticResource radioButton}"
+                             Content="Hủy đăng ký"
+                             Command="{Binding NavigateHuyDK}"></RadioButton>
+                <RadioButton Style="{StaticResource radioButton}" 
+                             Content="Hướng dẫn sử dụng"
+                             Command="{Binding NavigateHDSD}"></RadioButton>
+            </StackPanel>
+        </Border>
+
+        <UserControl Grid.Column="1" 
+                     Content="{Binding CurrentChildCiew}"></UserControl>
+        
     </Grid>
 </UserControl>

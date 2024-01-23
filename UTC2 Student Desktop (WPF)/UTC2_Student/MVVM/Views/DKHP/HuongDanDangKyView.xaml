@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views.DKHP"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="Wheat">
+        <TextBlock Text="Hưỡng dẫn đăng ký"></TextBlock>
     </Grid>
 </UserControl>
