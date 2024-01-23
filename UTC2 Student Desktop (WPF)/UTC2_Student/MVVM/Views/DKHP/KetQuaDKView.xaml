@@ -4,9 +4,135 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views.DKHP"
+             xmlns:view="clr-namespace:UTC2_Student.MVVM.Views.DKHP"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Wheat">
-        <TextBlock Text="Kết quả đk"></TextBlock>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+
+        <view:StringConverter x:Key="stringConvert"></view:StringConverter>
+        
+        <Style x:Key="container" TargetType="Border">
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="BorderBrush" Value="#1d4ed8"></Setter>
+            <Setter Property="Padding" Value="10"></Setter>
+            <Setter Property="Margin" Value="0,0,0,5"></Setter>
+        </Style>
+
+        <Style x:Key="text" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+        </Style>
+        
+        
+        
+    </UserControl.Resources>
+    
+    <Grid Background="white">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="#1d4ed8">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="Chọn đợt đăng ký"
+                               Margin="0,0,10,0"
+                               FontSize="15" LineHeight="20"></TextBlock>
+                    <ComboBox ItemsSource="{Binding DotHocPhans}"
+                              x:Name="dotHocPhan"
+                              FontSize="15"
+                              Width="500"
+                              SelectionChanged="dotHocPhan_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding tendot}" 
+                                               HorizontalAlignment="Left" 
+                                               TextWrapping="Wrap"
+                                               VerticalAlignment="Center" 
+                                               Width="500"></TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1"
+                    BorderBrush="#1e40af"
+                    BorderThickness="0,0,0,1">
+                <Grid VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding TongSoTC}"
+                       Margin="10,0,0,0"
+                       FontSize="20"
+                       Foreground="#1e40af"
+                       FontWeight="Medium"></TextBlock>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="2">
+                <ItemsControl ItemsSource="{Binding HocPhans, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource container}">
+                                <Button>
+                                    <Button.Template>
+                                        <ControlTemplate>
+
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="150"></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding mA_MONHOC}"
+                                                                Style="{StaticResource text}"
+                                                                FontWeight="Medium"></TextBlock>
+
+                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding teN_LOP}" TextWrapping="WrapWithOverflow"
+                                                            Style="{StaticResource text}"></TextBlock>
+
+
+                                                <TextBlock Text="Số tín chỉ: "
+                                                               Grid.Row="1" Grid.Column="0"
+                                                                FontWeight="Medium"
+                                                                Style="{StaticResource text}"></TextBlock>
+                                                <TextBlock Text="{Binding sO_TC}"
+                                                               Grid.Row="1" Grid.Column="1"
+                                                                Style="{StaticResource text}"></TextBlock>
+
+                                                <TextBlock Text="Thời khóa biểu: "
+                                                               Grid.Row="2" Grid.Column="0"
+                                                                FontWeight="Medium"
+                                                                Style="{StaticResource text}"></TextBlock>
+
+                                                <TextBlock Text="{Binding tkb, Converter={StaticResource stringConvert}}" TextWrapping="Wrap"
+                                                               Grid.Row="2" Grid.Column="1"
+                                                                Style="{StaticResource text}"></TextBlock>
+
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

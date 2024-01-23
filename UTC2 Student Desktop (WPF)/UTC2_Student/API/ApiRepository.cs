@@ -12,6 +12,7 @@ using UTC2_Student.API.IntermediateModels.HocPhi;
 using UTC2_Student.API.IntermediateModels.KTX;
 using UTC2_Student.API.IntermediateModels.LichThi;
 using UTC2_Student.API.IntermediateModels.NotificationResponses;
+using UTC2_Student.Repositories.IntermediateModels.ApiResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
 namespace UTC2_Student.Repositories
@@ -58,7 +59,7 @@ namespace UTC2_Student.Repositories
             }
         }
 
-        public async Task<HttpResponseMessage> GetDotDK()
+        public async Task<List<DotHocPhan>> GetDotDK()
         {
             using (var httpCLient = new HttpClient())
             {
@@ -70,12 +71,15 @@ namespace UTC2_Student.Repositories
 
                 // goi api
                 HttpResponseMessage response = await httpCLient.GetAsync(dotDKUrl);
+                var content = await response.Content.ReadAsStringAsync();
 
-                return response;
+                ThongTinDotHocPhan list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
+
+                return list.dotHocPhans;
             }
         }
 
-        public async Task<HttpResponseMessage> KetQuaDK(int id_dot_DK)
+        public async Task<List<HocPhan>> KetQuaDK(int id_dot_DK)
         {
             using (var httpCLient = new HttpClient())
             {
@@ -87,7 +91,15 @@ namespace UTC2_Student.Repositories
 
                 // goi api
                 HttpResponseMessage response = await httpCLient.GetAsync(ketQuaDKUrl);
-                return response;
+
+                if(response.IsSuccessStatusCode == false)
+                {
+                    return null;
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                List<HocPhan> hocPhans = JsonConvert.DeserializeObject<List<HocPhan>>(content);
+                return hocPhans;
             }
         }
 
@@ -311,6 +323,8 @@ namespace UTC2_Student.Repositories
         }
 
     #endregion
+
+
 
 
     //public async Task<string> DangKy(TimeSpan timeSpan, List<int> ids)
