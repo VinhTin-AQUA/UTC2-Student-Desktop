@@ -29,7 +29,6 @@ namespace UTC2_Student.API
 
         #endregion
 
-
         #region hoc phi
         private static string hocPhiBaseApi { get; set; } = "http://apihocphinew.utc2.edu.vn";
 
@@ -38,7 +37,13 @@ namespace UTC2_Student.API
 
         #endregion
 
+        #region lich thi
+        private static string lichThiBaseApi { get; set; } = "http://tmsappapi.utc2.edu.vn";
 
+        private static string getLichThiByHocKy { get; set; } = "/ServiceNotification_SV.svc/GetLichThiByHocKySV";
+        #endregion
+
+        // =====================================
         #region DKHP
         public static string LoginApi()
         {
@@ -113,6 +118,15 @@ namespace UTC2_Student.API
         public static string GetHocPhiApi()
         {
             return hocPhiBaseApi + getHocPhiApi;
+        }
+
+        #endregion
+
+        #region lich thi
+
+        public static string GetLichThiByHocKy()
+        {
+            return lichThiBaseApi + getLichThiByHocKy;
         }
 
         #endregion

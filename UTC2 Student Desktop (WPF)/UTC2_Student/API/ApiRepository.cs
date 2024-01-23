@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UTC2_Student.API;
 using UTC2_Student.API.IntermediateModels.HocPhi;
+using UTC2_Student.API.IntermediateModels.LichThi;
 using UTC2_Student.API.IntermediateModels.NotificationResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
@@ -187,7 +188,6 @@ namespace UTC2_Student.Repositories
 
         #endregion
 
-
         #region thong bao
 
         public async Task<NotificationResponse> GetThongBaos(int currentPage = 1)
@@ -210,7 +210,6 @@ namespace UTC2_Student.Repositories
         }
 
         #endregion
-
 
         #region hoc phi
 
@@ -243,6 +242,39 @@ namespace UTC2_Student.Repositories
 
         #endregion
 
+        #region lich thi
+
+        public async Task<List<LichThiModel>> GetLichThiByHocKy()
+        {
+            var data = new
+            {
+                SINHVIEN_ID = AuthModel.Instance.result[0].sinhvieN_ID,
+                MA_DVIQLY = AuthModel.Instance.result[0].mA_DVIQLY,
+                NC_OR_TC = AuthModel.Instance.result[0].nienchE_OR_TINCHI,
+                NAM_HOC = "0",
+                HOC_KY = "0"
+            };
+
+            var url = Urls.GetLichThiByHocKy();
+
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+
+            using(var http = new HttpClient())
+            {
+                var response = await http.PostAsync(url, jsonContent);
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                content = content.Replace("\\/", "/");
+                content = content.Remove(0, 1);
+                content = content.Remove(content.Length-1);
+                content = content.Replace("\\", "");
+                List<LichThiModel> list = JsonConvert.DeserializeObject<List<LichThiModel>>(content);
+                return list;
+            }
+        }
+
+        #endregion
 
 
         //public async Task<string> DangKy(TimeSpan timeSpan, List<int> ids)

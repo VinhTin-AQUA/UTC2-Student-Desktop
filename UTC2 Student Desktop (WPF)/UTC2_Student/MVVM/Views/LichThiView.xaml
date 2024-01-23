@@ -4,12 +4,199 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Green">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <Style x:Key="search" TargetType="TextBox">
+            <Setter Property="Width" Value="300"></Setter>
+            <Setter Property="Height" Value="35"></Setter>
+            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="Margin" Value="0,0,5,0"></Setter>
+            <Setter Property="FontSize" Value="17"></Setter>
+        </Style>
+
+        <Style x:Key="borderSearch" TargetType="Border">
+            <Setter Property="Background" Value="#7dd3fc"></Setter>
+            <Setter Property="CornerRadius" Value="20"></Setter>
+            <Setter Property="Width" Value="35"></Setter>
+            <Setter Property="Height" Value="35"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#271756"></Setter>
+                    
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="iconbtn" TargetType="{x:Type fa:IconImage}">
+            <Setter Property="Foreground" Value="#271756"></Setter>
+            <Setter Property="Width" Value="20"></Setter>
+            <Setter Property="Height" Value="20"></Setter>
+            <Setter Property="Foreground" Value="white"></Setter>
+        </Style>
+
+        <Style x:Key="lichThiDetail" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+
+        <Style x:Key="iconLichThi" TargetType="{x:Type fa:IconImage}">
+            <Setter Property="Width" Value="20"></Setter>
+            <Setter Property="Height" Value="20"></Setter>
+            <Setter Property="Foreground" Value="#271756"></Setter>
+        </Style>
+
+        <Style x:Key="textDetail" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Margin" Value="5,0,0,0"></Setter>
+        </Style>
+
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
         <TextBlock Text="Lịch thi"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               FontSize="30"></TextBlock>
+                   Grid.Row="0"
+                   FontSize="20"
+                   Foreground="#271756"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"></TextBlock>
+        
+        <Border Grid.Row="1"
+                BorderBrush="#271756"
+                BorderThickness="0,0,0,1"
+                Margin="10,0,10,0" Width="1000">
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        >
+                <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" 
+                         Style="{StaticResource search}" ></TextBox>
+
+                <Border Style="{StaticResource borderSearch}">
+                    <Button Command="{Binding SearchCommand}" 
+                            BorderThickness="0" 
+                            Background="Transparent">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Green"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <fa:IconImage Style="{StaticResource iconbtn}" 
+                                      Icon="Search" ></fa:IconImage>
+                    </Button>
+                </Border>
+                
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="2" Padding="20">
+            <Grid Width="1000">
+                <ItemsControl ItemsSource="{Binding LichThi, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,0,0,10" BorderBrush="#271756" 
+                                    BorderThickness="0,0,0,1"
+                                    Padding="0,0,0,5">
+                                <StackPanel>
+
+                                    <StackPanel Style="{StaticResource lichThiDetail}" Margin="0,0,0,5">
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="{Binding MONTHI}"
+                                                   FontWeight="Medium"
+                                                   Foreground="#271756"></TextBlock>
+                                        
+                                        <StackPanel Margin="10,0,0,0" 
+                                                    Style="{StaticResource lichThiDetail}">
+                                            <fa:IconImage Style="{StaticResource iconLichThi}" 
+                                                          Icon="Calendar"></fa:IconImage>
+                                            <TextBlock Style="{StaticResource textDetail}" 
+                                                       Text="{Binding NGAY_THI}"></TextBlock>
+                                        </StackPanel>
+                                        
+                                    </StackPanel>
+
+                                    <StackPanel Style="{StaticResource lichThiDetail}" Margin="0,0,0,5">
+                                        <fa:IconImage Style="{StaticResource iconLichThi}" Icon="Clock"></fa:IconImage>
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="Giờ thi: "
+                                                   FontWeight="Medium"
+                                                   Foreground="#271756"></TextBlock>
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="{Binding GIOTHI}"
+                                                   Margin="0,0,10,0"
+                                                   Foreground="#dc2626"></TextBlock>
+                                        <fa:IconImage Style="{StaticResource iconLichThi}" Icon="DoorOpen"></fa:IconImage>
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="Phòng: "
+                                                   FontWeight="Medium"
+                                                   Foreground="#271756"></TextBlock>
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="{Binding PHONG_THI}" 
+                                                   Foreground="#dc2626"></TextBlock>
+                                    </StackPanel>
+
+
+                                    <StackPanel Style="{StaticResource lichThiDetail}" Margin="0,0,0,5">
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="Mã học phần: "
+                                                   FontWeight="Medium"
+                                                   Foreground="#010101"></TextBlock>
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="{Binding MAHP}" 
+                                                   Foreground="#2563eb"></TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Style="{StaticResource lichThiDetail}" 
+                                                Margin="0,0,0,5">
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="Năm học: "
+                                                   FontWeight="Medium"
+                                                   Foreground="#010101"></TextBlock>
+                                        <TextBlock Style="{StaticResource textDetail}" 
+                                                   Text="{Binding NAM_HOC}" 
+                                                   Foreground="#2563eb"></TextBlock>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </Border>
+
+
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+
+            </Grid>
+        </ScrollViewer>
+        
     </Grid>
 </UserControl>

@@ -18,14 +18,43 @@
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="Background" Value="#fef9c3"></Setter>
             <Setter Property="Width" Value="150"></Setter>
-            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="Height" Value="60"></Setter>
         </Style>
 
         <Style x:Key="titleTongTien" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Center"></Setter>
-            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
             <Setter Property="Foreground" Value="#271756"></Setter>
             <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+
+        <Style x:Key="ngayDongTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+
+        <Style x:Key="soTienTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+
+        <Style x:Key="hinhThucTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+
+        <Style x:Key="ngayDongValue" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+
+        <Style x:Key="soTienValue" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="Foreground" Value="#dc2626"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+
+        <Style x:Key="hinhThucValue" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"></Setter>
         </Style>
 
     </UserControl.Resources>
@@ -33,8 +62,8 @@
 
     <Grid Background="white">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -85,22 +114,22 @@
                                 <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
-                                    <TextBlock FontWeight="bold" Text="Ngày đóng: "></TextBlock>
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding NGAY_DKY}"></TextBlock>
+                                    <TextBlock Style="{StaticResource ngayDongTitle}" Text="Ngày đóng: "></TextBlock>
+                                    <TextBlock Style="{StaticResource ngayDongValue}"  TextWrapping="Wrap" Text="{Binding NGAY_DKY}"></TextBlock>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
-                                    <TextBlock FontWeight="bold" Text="Số tiền: "></TextBlock>
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding PHAI_THU, Converter={StaticResource currencyConverter}}"></TextBlock>
+                                    <TextBlock Style="{StaticResource soTienTitle}"  Text="Số tiền: "></TextBlock>
+                                    <TextBlock Style="{StaticResource soTienValue}" Text="{Binding PHAI_THU, Converter={StaticResource currencyConverter}}"></TextBlock>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
-                                    <TextBlock FontWeight="bold" Text="Hình thức: "></TextBlock>
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding THU_TIEN}"></TextBlock>
+                                    <TextBlock Style="{StaticResource hinhThucTitle}" Text="Hình thức: "></TextBlock>
+                                    <TextBlock Style="{StaticResource hinhThucValue}" TextWrapping="Wrap" Text="{Binding THU_TIEN}"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
