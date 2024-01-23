@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UTC2_Student.API;
 using UTC2_Student.API.IntermediateModels.HocPhi;
+using UTC2_Student.API.IntermediateModels.KTX;
 using UTC2_Student.API.IntermediateModels.LichThi;
 using UTC2_Student.API.IntermediateModels.NotificationResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
@@ -277,98 +278,133 @@ namespace UTC2_Student.Repositories
         #endregion
 
 
-        //public async Task<string> DangKy(TimeSpan timeSpan, List<int> ids)
-        //{
-        //    if (ids.Count() <= 0)
-        //    {
-        //        return "Không có ids";
-        //    }
+        #region KTX
 
-        //    if (timeSpan > TimeSpan.Zero)
-        //    {
-        //        ctss = new List<CancellationTokenSource>();
-        //        List<Task> tasks = new List<Task>();
+        public async Task<List<LichSuKTX>> GetLichSuKTX()
+        {
+            var url = Urls.GetLichSuKTX();
+            var data = new
+            {
+                Student_ID = AuthModel.Instance.result[0].sinhvieN_ID
+            };
 
-        //        for (int i = 0; i < ids.Count(); i++)
-        //        {
-        //            ctss.Add(new CancellationTokenSource());
-        //        }
-        //        Console.WriteLine("Dang cho toi thoi diem dang ky");
-        //        await Task.Delay(timeSpan);
-        //        Console.WriteLine("Start");
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
 
-        //        for (int i = 0; i < ids.Count(); i++)
-        //        {
-        //            int index = i;
-        //            tasks.Add(Task.Run(() => GuiAPIDangKy(index, ids[index]), ctss[index].Token));
-        //        }
-        //        tasks.Add(Task.Run(() => LoginAgain()));
+            using (var http = new HttpClient())
+            {
+                http.DefaultRequestHeaders.Add("authorization", "646b10fa650c93c024244f49f1a88ac7fft123");
+                var response = await http.PostAsync(url, jsonContent);
 
-        //        // thực thi tác vụ
-        //        await Task.WhenAll(tasks);
+                if(response.IsSuccessStatusCode == false)
+                {
+                    return null;
+                }
+                var content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\\/", "/");
+                content = content.Replace("\\", "");
+                content = content.Remove(0, 1);
+                content = content.Remove(content.Length-1);
 
-        //        for(int i = 0; i < ctss.Count(); i++)
-        //        {
-        //            ctss[i].Cancel();
-        //        }
-        //        Console.WriteLine("End");
+                List<LichSuKTX> list = JsonConvert.DeserializeObject<List<LichSuKTX>>(content);
+                return list;
+            }
+        }
 
-        //        return "Hàm được thực thi vào thời điểm đã đặt.";
-        //    }
-        //    return "Lịch thực thi đã quá hạn";
-        //}
+    #endregion
 
-        //private async Task<string> GuiAPIDangKy(int cancelIndex, int id)
-        //{
-        //    while (true)
-        //    {
-        //        if (ctss[cancelIndex].Token.IsCancellationRequested == false)
-        //        {
-        //            // đợi call api
-        //            await Task.Delay(200);
 
-        //            int r = random.Next(1, 101);
+    //public async Task<string> DangKy(TimeSpan timeSpan, List<int> ids)
+    //{
+    //    if (ids.Count() <= 0)
+    //    {
+    //        return "Không có ids";
+    //    }
 
-        //            if (r == id)
-        //            {
-        //                ctss[cancelIndex].Cancel();
-        //                completedTasksTotal++; // tăng thêm 1 tác vụ hoàn thành
-        //                return "DK thanh cong: " + id;
-        //            }
-        //            Console.WriteLine($"DK {id} that bai. Dang dang nhap lai {r}");
-        //        }
-        //    }
-        //}
+    //    if (timeSpan > TimeSpan.Zero)
+    //    {
+    //        ctss = new List<CancellationTokenSource>();
+    //        List<Task> tasks = new List<Task>();
 
-        //private async Task LoginAgain()
-        //{
-        //    while (true)
-        //    {
-        //        await Task.Delay(1000); // đợi sau 3s A,B chạy thì do somthing
+    //        for (int i = 0; i < ids.Count(); i++)
+    //        {
+    //            ctss.Add(new CancellationTokenSource());
+    //        }
+    //        Console.WriteLine("Dang cho toi thoi diem dang ky");
+    //        await Task.Delay(timeSpan);
+    //        Console.WriteLine("Start");
 
-        //        // nếu tác vụ A,B hoàn thành có nghĩa completedTasksTotal == 2 thì kết thúc tác vụ
-        //        if (completedTasksTotal == ctss.Count())
-        //        {
-        //            break;
-        //        }
+    //        for (int i = 0; i < ids.Count(); i++)
+    //        {
+    //            int index = i;
+    //            tasks.Add(Task.Run(() => GuiAPIDangKy(index, ids[index]), ctss[index].Token));
+    //        }
+    //        tasks.Add(Task.Run(() => LoginAgain()));
 
-        //        // cancel để dừng tác vụ A,B
-        //        for (int i = 0; i < ctss.Count(); i++)
-        //        {
-        //            ctss[i].Cancel();
-        //        }
+    //        // thực thi tác vụ
+    //        await Task.WhenAll(tasks);
 
-        //        Console.WriteLine("Login Again");
-        //        //await Task.Delay(3000);
-        //        //Thread.Sleep(3000);
-        //        Console.WriteLine("Done");
+    //        for(int i = 0; i < ctss.Count(); i++)
+    //        {
+    //            ctss[i].Cancel();
+    //        }
+    //        Console.WriteLine("End");
 
-        //        // sau khi làm gì đó thì cho 2 tác vụ A,B tiếp tục
-        //        for (int i = 0; i < ctss.Count(); i++)
-        //        {
-        //            ctss[i] = new CancellationTokenSource();
-        //        }
-        //    }
-        //}
-    }
+    //        return "Hàm được thực thi vào thời điểm đã đặt.";
+    //    }
+    //    return "Lịch thực thi đã quá hạn";
+    //}
+
+    //private async Task<string> GuiAPIDangKy(int cancelIndex, int id)
+    //{
+    //    while (true)
+    //    {
+    //        if (ctss[cancelIndex].Token.IsCancellationRequested == false)
+    //        {
+    //            // đợi call api
+    //            await Task.Delay(200);
+
+    //            int r = random.Next(1, 101);
+
+    //            if (r == id)
+    //            {
+    //                ctss[cancelIndex].Cancel();
+    //                completedTasksTotal++; // tăng thêm 1 tác vụ hoàn thành
+    //                return "DK thanh cong: " + id;
+    //            }
+    //            Console.WriteLine($"DK {id} that bai. Dang dang nhap lai {r}");
+    //        }
+    //    }
+    //}
+
+    //private async Task LoginAgain()
+    //{
+    //    while (true)
+    //    {
+    //        await Task.Delay(1000); // đợi sau 3s A,B chạy thì do somthing
+
+    //        // nếu tác vụ A,B hoàn thành có nghĩa completedTasksTotal == 2 thì kết thúc tác vụ
+    //        if (completedTasksTotal == ctss.Count())
+    //        {
+    //            break;
+    //        }
+
+    //        // cancel để dừng tác vụ A,B
+    //        for (int i = 0; i < ctss.Count(); i++)
+    //        {
+    //            ctss[i].Cancel();
+    //        }
+
+    //        Console.WriteLine("Login Again");
+    //        //await Task.Delay(3000);
+    //        //Thread.Sleep(3000);
+    //        Console.WriteLine("Done");
+
+    //        // sau khi làm gì đó thì cho 2 tác vụ A,B tiếp tục
+    //        for (int i = 0; i < ctss.Count(); i++)
+    //        {
+    //            ctss[i] = new CancellationTokenSource();
+    //        }
+    //    }
+    //}
+}
 }

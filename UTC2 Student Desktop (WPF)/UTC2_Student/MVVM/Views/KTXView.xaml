@@ -5,11 +5,138 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Green">
-        <TextBlock Text="KTX"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               FontSize="30"></TextBlock>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <Style x:Key="text" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="10"></Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+
+        <TextBlock Text="Bạn chưa đăng ký KTX" 
+                   Visibility="{Binding StatusText, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
+        </TextBlock>
+
+        <Grid Visibility="{Binding Status, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center">
+                <TextBlock Text="Thông tin cư trú hiện tại"
+                           FontSize="30"
+                           Background="#fef08a"
+                           Foreground="#1e3a8a"
+                           FontWeight="Medium"
+                           Padding="5"></TextBlock>
+            </Grid>
+            
+            <Grid Grid.Row="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0"
+              Grid.Column="0"
+              Text="Khu nhà: "
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="1"
+               Grid.Column="0"
+              Text="Số phòng: "
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="2"
+            Grid.Column="0"
+              Text="Loại phòng: "
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="3"
+               Grid.Column="0"
+              Text="Giường số: "
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="4"
+               Grid.Column="0"
+              Text="Giá: "
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="5"
+               Grid.Column="0"
+              Text="Bắt đầu ở: "
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="6"
+               Grid.Column="0"
+              Text="Ngày trả phòng: "
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="0"
+  Grid.Column="1"
+  Text="{Binding LichSuKTXs.HouseName}"
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="1"
+   Grid.Column="1"
+  Text="{Binding LichSuKTXs.DormitoryRoomName}"
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="2"
+Grid.Column="1"
+  Text="{Binding LichSuKTXs.DormitoryRoomTypeName}"
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="3"
+   Grid.Column="1"
+  Text="{Binding LichSuKTXs.DormitoryRoomSlotName}"
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="4"
+   Grid.Column="1"
+  Text="{Binding LichSuKTXs.Price}"
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="5"
+   Grid.Column="1"
+  Text="{Binding LichSuKTXs.CheckInDate}"
+              Style="{StaticResource text}"></TextBlock>
+
+                <TextBlock Grid.Row="6"
+   Grid.Column="1"
+  Text="{Binding LichSuKTXs.CheckOutDate}"
+              Style="{StaticResource text}"></TextBlock>
+
+
+
+            </Grid>
+            
+
+            
+
+            
+        </Grid>
+
     </Grid>
 </UserControl>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UTC2_Student.MVVM.ViewModels;
 
 namespace UTC2_Student.MVVM.Views
 {
@@ -20,9 +21,17 @@ namespace UTC2_Student.MVVM.Views
     /// </summary>
     public partial class KTXView : UserControl
     {
+        private KTXViewModel kTXViewModel;
         public KTXView()
         {
             InitializeComponent();
+            kTXViewModel = new KTXViewModel();
+            this.DataContext = kTXViewModel;
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            await kTXViewModel.GetLichSuKTX();
         }
     }
 }

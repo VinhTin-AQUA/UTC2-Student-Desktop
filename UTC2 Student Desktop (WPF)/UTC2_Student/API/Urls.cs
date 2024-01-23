@@ -43,6 +43,13 @@ namespace UTC2_Student.API
         private static string getLichThiByHocKy { get; set; } = "/ServiceNotification_SV.svc/GetLichThiByHocKySV";
         #endregion
 
+        #region ktx
+        private static string ktxBaseApi = "http://apiktxnew.utc2.edu.vn";
+        private static string getLichSuKTX = "/Service_DangKyKTX.svc/jsonRentHistory";
+
+        // http://apiktxnew.utc2.edu.vn/Service_DangKyKTX.svc/jsonRentHistory
+        #endregion
+
         // =====================================
         #region DKHP
         public static string LoginApi()
@@ -127,6 +134,15 @@ namespace UTC2_Student.API
         public static string GetLichThiByHocKy()
         {
             return lichThiBaseApi + getLichThiByHocKy;
+        }
+
+        #endregion
+
+        #region KTX
+
+        public static string GetLichSuKTX()
+        {
+            return ktxBaseApi + getLichSuKTX;
         }
 
         #endregion
