@@ -23,9 +23,6 @@
             <Setter Property="FontSize" Value="15"></Setter>
             <Setter Property="TextWrapping" Value="Wrap"></Setter>
         </Style>
-        
-        
-        
     </UserControl.Resources>
     
     <Grid Background="white">

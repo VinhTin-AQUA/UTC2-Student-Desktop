@@ -5,8 +5,206 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views.DKHP"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Wheat">
-        <TextBlock Text="Chọn môn đk"></TextBlock>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <!--<view:StringConverter x:Key="stringConvert"></view:StringConverter>-->
+
+        <Style x:Key="container" TargetType="Border">
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="BorderBrush" Value="#1d4ed8"></Setter>
+            <Setter Property="Padding" Value="10"></Setter>
+            <Setter Property="Margin" Value="0,0,0,5"></Setter>
+        </Style>
+
+        <Style x:Key="text" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+        </Style>
+
+        <Style x:Key="textHeader" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="Foreground" Value="#1d4ed8"></Setter>
+        </Style>
+
+        <Style x:Key="checkBox" TargetType="CheckBox">
+            <Setter Property="Background" Value="#dcfce7"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#4338ca"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Background="white">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+             BorderThickness="0,0,0,1"
+             BorderBrush="#1d4ed8">
+                <StackPanel Orientation="Horizontal"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center">
+                    <TextBlock Text="Chọn môn học"
+                        Margin="0,0,10,0"
+                        FontSize="15" LineHeight="20"></TextBlock>
+                    <ComboBox ItemsSource="{Binding MonHocs}"
+                       x:Name="lopHocPhan"
+                       FontSize="15"
+                       Width="500"
+                       SelectionChanged="lopHocPhan_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding teN_MONHOC}" 
+                                        HorizontalAlignment="Left" 
+                                        TextWrapping="Wrap"
+                                        VerticalAlignment="Center" 
+                                        Width="500"></TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+
+            <ScrollViewer Grid.Row="1">
+                <ItemsControl ItemsSource="{Binding HocPhans, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource container}">
+                                <Button>
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Grid.Row="0" 
+                                                           Grid.Column="0" 
+                                                           Text="Lớp học phần: "
+                                                           Style="{StaticResource textHeader}"></TextBlock>
+                                                
+                                                <TextBlock Grid.Row="0"
+                                                           Grid.Column="1" 
+                                                           Text="{Binding teN_LOP}"
+                                                           Style="{StaticResource text}"></TextBlock>
+
+                                                <TextBlock Grid.Row="1" 
+                                                       Grid.Column="0" 
+                                                       Text="Số tín chỉ: "
+                                                           Style="{StaticResource textHeader}"></TextBlock>
+
+                                                <TextBlock Grid.Row="1" 
+                                                       Grid.Column="1" 
+                                                       Text="{Binding sO_TC}"
+                                                           Style="{StaticResource text}"></TextBlock>
+
+                                                <TextBlock Grid.Row="2" 
+                                                       Grid.Column="0" 
+                                                       Text="TKB: "
+                                                           Style="{StaticResource textHeader}"></TextBlock>
+
+                                                <TextBlock Grid.Row="2" 
+                                                       Grid.Column="1" 
+                                                       Text="{Binding tkb}"
+                                                           Style="{StaticResource text}"></TextBlock>
+
+                                                <TextBlock Grid.Row="3" 
+                                                       Grid.Column="0" 
+                                                       Text="Số SV đăng ký: "
+                                                           Style="{StaticResource textHeader}"></TextBlock>
+
+                                                <TextBlock Grid.Row="3" 
+                                                       Grid.Column="1" 
+                                                       Text="{Binding soSVDK}"
+                                                           Style="{StaticResource text}"></TextBlock>
+
+                                                <CheckBox Style="{StaticResource checkBox}" 
+                                                          Grid.Column="2" Grid.Row="2"
+                                                          Checked="CheckBox_Checked" 
+                                                          Unchecked="CheckBox_Unchecked"
+                                                          Content="{Binding teN_LOP}"
+                                                          Foreground="Transparent"
+                                                          Tag="{Binding loP_HOCPHAN_CTIET_ID}">
+                                                    <CheckBox.LayoutTransform>
+                                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                                    </CheckBox.LayoutTransform>
+                                                </CheckBox>
+
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <Border Grid.Row="2"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="#3730a3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Lưu ý: đối với môn có học phần thực hành, phải chọn cả 2: Lớp học lý thuyết và lớp thực hành"
+                                Grid.Column="0"
+                               FontSize="18"
+                               TextWrapping="Wrap"
+                               FontWeight="Bold"
+                               Foreground="Red"></TextBlock>
+                   
+                    <Button Grid.Column="1" 
+                            Background="#bfdbfe"
+                            Foreground="#3730a3"
+                            FontSize="20"
+                            FontWeight="bold"
+                            BorderThickness="0"
+                            >
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Button Background="#bae6fd"
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center"
+                                        Cursor="Hand"
+                                        BorderThickness="0"
+                                        Padding="8"
+                                        Command="{Binding LuuIdHocPhanCommand}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Lưu" Margin="0,0,10,0"></TextBlock>
+                                        <TextBlock Text="{Binding SoLopHocPhanDaChonMoiMon}"></TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
+using UTC2_Student.API.IntermediateModels.ApiResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
 namespace UTC2_Student.API
@@ -18,6 +20,7 @@ namespace UTC2_Student.API
         private static readonly string accountDataPath = @"/account.json";
 
         private static readonly string authModelDataPath = @"/auth_model.json";
+        private static readonly string idHocPhanPath = @"/idHocPhans.json";
 
         public static string DataDirectory
         {
@@ -32,6 +35,11 @@ namespace UTC2_Student.API
         public static string AuthModelDataPath
         {
             get { return dataDirectory + authModelDataPath; }
+        }
+
+        public static string IdHocPhanPath
+        {
+            get { return dataDirectory + idHocPhanPath; }
         }
 
         public static bool CheckForInternetConnection(int timeoutMs = 10000, string url = null)
@@ -86,6 +94,25 @@ namespace UTC2_Student.API
             AuthModel.Instance = JsonConvert.DeserializeObject<AuthModel>(jsonText);
         }
 
+        public static void SaveIdHocPhans(HocPhanDaChon hocPhanDaChon)
+        {
+            List<HocPhanDaChon> hocPhanDaChons = ReadIdHocPhans();
+            hocPhanDaChons.Add(hocPhanDaChon);
+
+            string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
+            File.WriteAllText(IdHocPhanPath, json);
+        }
+
+        public static List<HocPhanDaChon> ReadIdHocPhans()
+        {
+            string jsonText = File.ReadAllText(IdHocPhanPath);
+            List<HocPhanDaChon> hocPhanDaChons = JsonConvert.DeserializeObject<List<HocPhanDaChon>>(jsonText);
+            if (hocPhanDaChons == null)
+            {
+                return new List<HocPhanDaChon>();
+            }
+            return hocPhanDaChons;
+        }
 
         //public static void RemoveAccount()
         //{

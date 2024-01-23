@@ -8,8 +8,6 @@ namespace UTC2_Student.Repositories.IntermediateModels.ApiResponses
 {
     public class ThongTinDotHocPhan
     {
-        private static ThongTinDotHocPhan? instance { get; set; } = null;
-        private static readonly object lockObject = new object();
 
         #region props
         public Count? count { get; set; } = null;
@@ -51,28 +49,7 @@ namespace UTC2_Student.Repositories.IntermediateModels.ApiResponses
         #endregion
 
         // private: ngăn chặn tạo đối tượng từ bên ngoài
-        private ThongTinDotHocPhan()
-        {
+      
 
-        }
-
-        public static ThongTinDotHocPhan Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (lockObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new ThongTinDotHocPhan();
-                        }
-                    }
-                }
-                return instance;
-            }
-            set { instance = value; }
-        }
     }
 }

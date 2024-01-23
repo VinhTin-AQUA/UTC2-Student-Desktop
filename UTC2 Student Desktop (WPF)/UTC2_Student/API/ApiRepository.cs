@@ -45,7 +45,7 @@ namespace UTC2_Student.Repositories
 
 
         #region DKHP
-        public async Task<HttpResponseMessage> GetDanhSachHocPhan(int idMonHoc)
+        public async Task<List<HocPhan>> GetDanhSachHocPhan(int idMonHoc)
         {
             using (var http = new HttpClient())
             {
@@ -55,7 +55,38 @@ namespace UTC2_Student.Repositories
 
                 string danhSachMonHocDangKyUrl = Urls.DanhSachHocPhanApi(AuthModel.Instance, idMonHoc);
                 HttpResponseMessage response = await http.GetAsync(danhSachMonHocDangKyUrl);
-                return response;
+                if(response.IsSuccessStatusCode == false)
+                {
+                    return null;
+                }
+                var content = await response.Content.ReadAsStringAsync();
+                ThongTinDotHocPhan thongTinDotHocPhan = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
+                return thongTinDotHocPhan.hocphan_ct;
+            }
+        }
+
+        public async Task<List<MonHoc>> GetDSMonHoc()
+        {
+            using (var httpCLient = new HttpClient())
+            {
+                httpCLient.Timeout = TimeSpan.FromDays(10);
+                // đính kèm header
+                httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
+
+                string dotDKUrl = Urls.DSDotDKApi(AuthModel.Instance);
+
+                // goi api
+                HttpResponseMessage response = await httpCLient.GetAsync(dotDKUrl);
+                if (response.IsSuccessStatusCode == false)
+                {
+                    return null;
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                ThongTinDotHocPhan list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
+
+                return list.monhoccombox;
             }
         }
 
@@ -71,6 +102,11 @@ namespace UTC2_Student.Repositories
 
                 // goi api
                 HttpResponseMessage response = await httpCLient.GetAsync(dotDKUrl);
+                if(response.IsSuccessStatusCode == false)
+                {
+                    return null;
+                }
+
                 var content = await response.Content.ReadAsStringAsync();
 
                 ThongTinDotHocPhan list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);

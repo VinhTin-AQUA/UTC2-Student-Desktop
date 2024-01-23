@@ -47,6 +47,11 @@ namespace UTC2_Student
             {
                 File.Create(DataHelper.AuthModelDataPath);
             }
+
+            if (File.Exists(DataHelper.IdHocPhanPath) == false)
+            {
+                File.Create(DataHelper.IdHocPhanPath);
+            }
         }
 
         private async Task<bool> CheckLogin()
