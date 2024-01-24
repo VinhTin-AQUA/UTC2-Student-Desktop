@@ -204,7 +204,7 @@ namespace UTC2_Student.Repositories
             var data = new
             {
                 ID = id,
-                ID_KHOAHOC = AuthModel.Instance.result[0].iD_KHOAHOC,
+                ID_KHOAHOC = AuthModel.Instance!.result[0].iD_KHOAHOC,
                 ID_NGANH = AuthModel.Instance.result[0].iD_NGANH,
                 MA_DVIQLY = AuthModel.Instance.result[0].mA_DVIQLY,
                 MA_SINHVIEN = AuthModel.Instance.result[0].mA_SINHVIEN,
@@ -223,14 +223,18 @@ namespace UTC2_Student.Repositories
             using (var http = new HttpClient())
             {
                 http.Timeout = TimeSpan.FromDays(10);
-
-                var reponse = await http.PostAsync(url, jsonContent);
+                http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
+                HttpResponseMessage? reponse = null;
 
                 while(true)
                 {
+                    reponse = await http.PostAsync(url, jsonContent);
+
                     if (reponse.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        await Login(LoginModel.Instance.MSSV, LoginModel.Instance.Password);
+                        await Login(LoginModel.Instance!.MSSV, LoginModel.Instance.Password);
+                        http.DefaultRequestHeaders.Remove("Authorization");
+                        http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
                     }
 
                     if(reponse.IsSuccessStatusCode == false)
