@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using UTC2_Student.API;
 using UTC2_Student.API.IntermediateModels.ApiResponses;
@@ -58,6 +59,14 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
 
         private void ExecuteXoaIdHocPhanCommand(object obj)
         {
+            var r = System.Windows.MessageBox.Show("Bạn có muốn xóa không?", "Xóa học phần lên lịch",
+                MessageBoxButton.OKCancel, MessageBoxImage.Question);
+
+            if (r == MessageBoxResult.Cancel)
+            {
+                return;
+            }
+
             foreach (var p in IdHocPhanXoa)
             {
                 var hocPhan = HocPhans.Where(hp => hp.Id == p).FirstOrDefault();
@@ -69,6 +78,5 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
             DataHelper.RemoveIdHocPhans(IdHocPhanXoa);
             IdHocPhanXoa.Clear();
         }
-
     }
 }
