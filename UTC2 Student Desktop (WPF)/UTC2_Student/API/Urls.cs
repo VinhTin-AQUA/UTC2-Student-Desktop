@@ -12,11 +12,12 @@ namespace UTC2_Student.API
         #region DKHP
         private static string baseApi { get; set; } = "http://apiportalstudent7mobile.utc2.edu.vn/api/v1";
         private static string loginApi { get; set; } = "/auth/login";
-
         private static string dSDotDKApi { get; set; } = "/DangKy_MonHoc";
         private static string ketQuaDKApi { get; set; } = "/Partial_DanhSachDaDK";
         private static string danhSachHocPhanApi { get; set; } = "/DanhSach_MonHoc_KNAndMH";
         private static string dangKyApi { get; set; } = "/Luu_KetQuaDangKy";
+
+        private static string huyKQDKApi { get; set; } = "/Huy_KetQuaDangKy";
         #endregion
 
         #region thong bao
@@ -95,6 +96,11 @@ namespace UTC2_Student.API
         public static string DangKyApi()
         {
             return baseApi + dangKyApi;
+        }
+
+        public static string HuyKQDKApi()
+        {
+            return (baseApi + huyKQDKApi);
         }
 
         #endregion

@@ -20,11 +20,6 @@ namespace UTC2_Student.Repositories
 {
     public class ApiRepository
     {
-
-        static bool stopTasks = false;
-        static Random random = new Random();
-        static int completedTasksTotal = 0;
-        static List<CancellationTokenSource> ctss; // quản lý trạng thái run của các tác vụ A,B
         private static ApiRepository _ins = null;
 
         public static ApiRepository Ins
@@ -39,104 +34,52 @@ namespace UTC2_Student.Repositories
             }
         }
 
-
         private ApiRepository()
         {
         }
 
-
         #region DKHP
         public async Task<List<HocPhan>> GetDanhSachHocPhan(int idMonHoc)
         {
-            using (var http = new HttpClient())
-            {
-                http.Timeout = TimeSpan.FromDays(10);
-                // đính kèm header
-                http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
+            string danhSachMonHocDangKyUrl = Urls.DanhSachHocPhanApi(AuthModel.Instance!, idMonHoc);
+            var response = await GET(danhSachMonHocDangKyUrl, true);
 
-                string danhSachMonHocDangKyUrl = Urls.DanhSachHocPhanApi(AuthModel.Instance, idMonHoc);
-                HttpResponseMessage response = await http.GetAsync(danhSachMonHocDangKyUrl);
-                if(response.IsSuccessStatusCode == false)
-                {
-                    return null;
-                }
-                var content = await response.Content.ReadAsStringAsync();
-                ThongTinDotHocPhan thongTinDotHocPhan = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
-                return thongTinDotHocPhan.hocphan_ct;
-            }
+            string content = await response.Content.ReadAsStringAsync();
+            ThongTinDotHocPhan? thongTinDotHocPhan = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
+            return thongTinDotHocPhan!.hocphan_ct;
         }
 
         public async Task<List<MonHoc>> GetDSMonHoc()
         {
-            using (var httpCLient = new HttpClient())
-            {
-                httpCLient.Timeout = TimeSpan.FromDays(10);
-                // đính kèm header
-                httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
-
-                string dotDKUrl = Urls.DSDotDKApi(AuthModel.Instance);
-
-                // goi api
-                HttpResponseMessage response = await httpCLient.GetAsync(dotDKUrl);
-                if (response.IsSuccessStatusCode == false)
-                {
-                    return null;
-                }
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                ThongTinDotHocPhan list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
-
-                return list.monhoccombox;
-            }
+            string dotDKUrl = Urls.DSDotDKApi(AuthModel.Instance!);
+            var response = await GET(dotDKUrl, true);
+            var content = await response.Content.ReadAsStringAsync();
+            ThongTinDotHocPhan? list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
+            return list!.monhoccombox;
         }
 
         public async Task<List<DotHocPhan>> GetDotDK()
         {
-            using (var httpCLient = new HttpClient())
-            {
-                httpCLient.Timeout = TimeSpan.FromDays(10);
-                // đính kèm header
-                httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
-
-                string dotDKUrl = Urls.DSDotDKApi(AuthModel.Instance);
-
-                // goi api
-                HttpResponseMessage response = await httpCLient.GetAsync(dotDKUrl);
-                if(response.IsSuccessStatusCode == false)
-                {
-                    return null;
-                }
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                ThongTinDotHocPhan list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
-
-                return list.dotHocPhans;
-            }
+            string dotDKUrl = Urls.DSDotDKApi(AuthModel.Instance!);
+            var response = await GET(dotDKUrl, true);
+            var content = await response.Content.ReadAsStringAsync();
+            ThongTinDotHocPhan? list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
+            return list!.dotHocPhans;
         }
 
         public async Task<List<HocPhan>> KetQuaDK(int id_dot_DK)
         {
-            using (var httpCLient = new HttpClient())
+            string ketQuaDKUrl = Urls.KetQuaDKApi(AuthModel.Instance!, id_dot_DK);
+            var response = await GET(ketQuaDKUrl, true);
+            var content = await response.Content.ReadAsStringAsync();
+            try
             {
-                httpCLient.Timeout = TimeSpan.FromDays(10);
-                // đính kèm header
-                httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
-
-                string ketQuaDKUrl = Urls.KetQuaDKApi(AuthModel.Instance, id_dot_DK);
-
-                // goi api
-                HttpResponseMessage response = await httpCLient.GetAsync(ketQuaDKUrl);
-
-                if(response.IsSuccessStatusCode == false)
-                {
-                    return null;
-                }
-
-                var content = await response.Content.ReadAsStringAsync();
-                List<HocPhan> hocPhans = JsonConvert.DeserializeObject<List<HocPhan>>(content);
-                return hocPhans;
+                List<HocPhan>? hocPhans = JsonConvert.DeserializeObject<List<HocPhan>>(content);
+                return hocPhans!;
+            }
+            catch
+            {
+                return new List<HocPhan> { };
             }
         }
 
@@ -228,12 +171,80 @@ namespace UTC2_Student.Repositories
                     httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
 
                     // goi api
-                    HttpResponseMessage response = await httpCLient.PostAsync(dangKyUrl, jsonContext);
+                    HttpResponseMessage? response = null;
 
-                    return response;
+                    while(true)
+                    {
+                        response = await httpCLient.PostAsync(dangKyUrl, jsonContext);
+
+                        if (response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            await Login(LoginModel.Instance!.MSSV, LoginModel.Instance.Password);
+                            httpCLient.DefaultRequestHeaders.Remove("Authorization");
+                            httpCLient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
+                            response = await httpCLient.PostAsync(dangKyUrl, jsonContext);
+                        }
+
+                        if (response.IsSuccessStatusCode == false)
+                        {
+                            continue;
+                        }
+                        else if (response.IsSuccessStatusCode == true)
+                        {
+                            return response;
+                        }
+                    }
                 }
             }
             return null;
+        }
+
+        public async Task<string> HuyDKHocPhan(string id)
+        {
+            var data = new
+            {
+                ID = id,
+                ID_KHOAHOC = AuthModel.Instance.result[0].iD_KHOAHOC,
+                ID_NGANH = AuthModel.Instance.result[0].iD_NGANH,
+                MA_DVIQLY = AuthModel.Instance.result[0].mA_DVIQLY,
+                MA_SINHVIEN = AuthModel.Instance.result[0].mA_SINHVIEN,
+                NIENCHE_OR_TINCHI = AuthModel.Instance.result[0].nienchE_OR_TINCHI,
+                SINHVIEN_ID = AuthModel.Instance.result[0].sinhvieN_ID,
+                LOPHOC_ID = AuthModel.Instance.result[0].lophoC_ID,
+                idCN = AuthModel.Instance.result[0].id_cn,
+                NHocKy = AuthModel.Instance.result[0].namHocKy,
+                SHocKy = AuthModel.Instance.result[0].soHocKy,
+                idHeDaoTao = AuthModel.Instance.result[0].iD_HEDAOTAO,
+                ID_SINHVIEN_NAMHOC = AuthModel.Instance.result[0].iD_SINHVIEN_NAMHOC
+            };
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            string url = Urls.HuyKQDKApi();
+
+            using (var http = new HttpClient())
+            {
+                http.Timeout = TimeSpan.FromDays(10);
+
+                var reponse = await http.PostAsync(url, jsonContent);
+
+                while(true)
+                {
+                    if (reponse.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        await Login(LoginModel.Instance.MSSV, LoginModel.Instance.Password);
+                    }
+
+                    if(reponse.IsSuccessStatusCode == false)
+                    {
+                        continue;
+                    }
+
+                    if(reponse.IsSuccessStatusCode)
+                    {
+                        var content = await reponse.Content.ReadAsStringAsync();
+                        return content;
+                    }
+                }
+            }
         }
 
         #endregion
@@ -245,18 +256,14 @@ namespace UTC2_Student.Repositories
             using (var httpCLient = new HttpClient())
             {
                 httpCLient.Timeout = TimeSpan.FromDays(10);
-
                 var url = Urls.GetThongBaoApi(currentPage, 20);
                 var response = await httpCLient.GetAsync(url);
-
                 var content = await response.Content.ReadAsStringAsync();
-
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    NotificationResponse notificationResponse = JsonConvert.DeserializeObject<NotificationResponse>(content);
-                    return notificationResponse;
+                    NotificationResponse? notificationResponse = JsonConvert.DeserializeObject<NotificationResponse>(content);
+                    return notificationResponse!;
                 };
-
                 return null;
             }
         }
@@ -363,102 +370,51 @@ namespace UTC2_Student.Repositories
             }
         }
 
-    #endregion
+        #endregion
 
 
+        /* private methods */
+        private async Task<HttpResponseMessage> GET(string url, bool hasToken = false)
+        {
+            HttpResponseMessage? response = null;
 
-    //public async Task<string> DangKy(TimeSpan timeSpan, List<int> ids)
-    //{
-    //    if (ids.Count() <= 0)
-    //    {
-    //        return "Không có ids";
-    //    }
+            using (var http = new HttpClient())
+            {
+                if(hasToken == true)
+                {
+                    http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance!.v);
+                }
+                http.Timeout = TimeSpan.FromDays(10);
 
-    //    if (timeSpan > TimeSpan.Zero)
-    //    {
-    //        ctss = new List<CancellationTokenSource>();
-    //        List<Task> tasks = new List<Task>();
+                while (true)
+                {
+                    response = await http.GetAsync(url);
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        await Login(LoginModel.Instance!.MSSV, LoginModel.Instance.Password);
+                        if (hasToken == true)
+                        {
+                            http.DefaultRequestHeaders.Remove("Authorization");
+                            http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance!.v);
+                        }
+                        response = await http.GetAsync(url);
+                    }
 
-    //        for (int i = 0; i < ids.Count(); i++)
-    //        {
-    //            ctss.Add(new CancellationTokenSource());
-    //        }
-    //        Console.WriteLine("Dang cho toi thoi diem dang ky");
-    //        await Task.Delay(timeSpan);
-    //        Console.WriteLine("Start");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return response;
+                    }
+                    else if (response.IsSuccessStatusCode == false)
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
 
-    //        for (int i = 0; i < ids.Count(); i++)
-    //        {
-    //            int index = i;
-    //            tasks.Add(Task.Run(() => GuiAPIDangKy(index, ids[index]), ctss[index].Token));
-    //        }
-    //        tasks.Add(Task.Run(() => LoginAgain()));
-
-    //        // thực thi tác vụ
-    //        await Task.WhenAll(tasks);
-
-    //        for(int i = 0; i < ctss.Count(); i++)
-    //        {
-    //            ctss[i].Cancel();
-    //        }
-    //        Console.WriteLine("End");
-
-    //        return "Hàm được thực thi vào thời điểm đã đặt.";
-    //    }
-    //    return "Lịch thực thi đã quá hạn";
-    //}
-
-    //private async Task<string> GuiAPIDangKy(int cancelIndex, int id)
-    //{
-    //    while (true)
-    //    {
-    //        if (ctss[cancelIndex].Token.IsCancellationRequested == false)
-    //        {
-    //            // đợi call api
-    //            await Task.Delay(200);
-
-    //            int r = random.Next(1, 101);
-
-    //            if (r == id)
-    //            {
-    //                ctss[cancelIndex].Cancel();
-    //                completedTasksTotal++; // tăng thêm 1 tác vụ hoàn thành
-    //                return "DK thanh cong: " + id;
-    //            }
-    //            Console.WriteLine($"DK {id} that bai. Dang dang nhap lai {r}");
-    //        }
-    //    }
-    //}
-
-    //private async Task LoginAgain()
-    //{
-    //    while (true)
-    //    {
-    //        await Task.Delay(1000); // đợi sau 3s A,B chạy thì do somthing
-
-    //        // nếu tác vụ A,B hoàn thành có nghĩa completedTasksTotal == 2 thì kết thúc tác vụ
-    //        if (completedTasksTotal == ctss.Count())
-    //        {
-    //            break;
-    //        }
-
-    //        // cancel để dừng tác vụ A,B
-    //        for (int i = 0; i < ctss.Count(); i++)
-    //        {
-    //            ctss[i].Cancel();
-    //        }
-
-    //        Console.WriteLine("Login Again");
-    //        //await Task.Delay(3000);
-    //        //Thread.Sleep(3000);
-    //        Console.WriteLine("Done");
-
-    //        // sau khi làm gì đó thì cho 2 tác vụ A,B tiếp tục
-    //        for (int i = 0; i < ctss.Count(); i++)
-    //        {
-    //            ctss[i] = new CancellationTokenSource();
-    //        }
-    //    }
-    //}
-}
+        //private async Task<HttpResponseMessage> POST(string url, bool hasToken = false)
+        //{
+        //    return null;
+        //}
+    }
 }

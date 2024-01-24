@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,6 @@ namespace UTC2_Student.Stores
 {
     public static class HocPhanDaChonStore
     {
-        public static List<HocPhanDaChon>? HocPhans { get; set; }
+        public static ObservableCollection<HocPhanDaChon>? HocPhans { get; set; }
     }
 }

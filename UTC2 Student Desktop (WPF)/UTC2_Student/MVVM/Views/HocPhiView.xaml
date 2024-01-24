@@ -6,12 +6,13 @@
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
              xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels"
              xmlns:view="clr-namespace:UTC2_Student.MVVM.Views"
+             xmlns:converter="clr-namespace:UTC2_Student.MVVM.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
-        <view:CurrencyConverter x:Key="currencyConverter"></view:CurrencyConverter>
+        <converter:CurrencyConverter x:Key="currencyConverter"></converter:CurrencyConverter>
 
         <Style x:Key="tongTienContainer" TargetType="StackPanel">
             <Setter Property="VerticalAlignment" Value="Center"></Setter>

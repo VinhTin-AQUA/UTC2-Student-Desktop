@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views.DKHP"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -35,6 +36,31 @@
                     <Setter Property="Background" Value="#4338ca"></Setter>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <Style x:Key="deleteRadio" TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <fa:IconImage x:Name="icon" Icon="Trash" 
+                                          Width="20" 
+                                          Foreground="#38bdf8"
+                                          Height="20">
+                            </fa:IconImage>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="red" TargetName="icon"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+           
+             
         </Style>
 
     </UserControl.Resources>
@@ -75,6 +101,7 @@
                                                     <ColumnDefinition Width="120"></ColumnDefinition>
                                                     <ColumnDefinition></ColumnDefinition>
                                                     <ColumnDefinition Width="200"></ColumnDefinition>
+                                                    <ColumnDefinition Width="40"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock Grid.Row="0" 
@@ -102,15 +129,13 @@
                                                            Text="{Binding Status, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"
                                                             Style="{StaticResource text}"></TextBlock>
 
-                                                <!--<TextBlock Grid.Row="2" 
-                                                           Grid.Column="0" 
-                                                           Text="TKB: "
-                                                               Style="{StaticResource textHeader}"></TextBlock>
+                                                <CheckBox Style="{StaticResource deleteRadio}"
+                                                            Grid.Column="3" Grid.ColumnSpan="4"
+                                                          Checked="CheckBox_Checked"
+                                                          Unchecked="CheckBox_Unchecked"
+                                                          Tag="{Binding Id}">
+                                                </CheckBox>
 
-                                                <TextBlock Grid.Row="2" 
-                                                           Grid.Column="1" 
-                                                           Text="{Binding tkb}"
-                                                               Style="{StaticResource text}"></TextBlock>-->
                                             </Grid>
                                         </ControlTemplate>
                                     </Button.Template>
@@ -124,34 +149,33 @@
             <Border Grid.Row="2"
                 BorderThickness="0,1,0,0"
                 BorderBrush="#3730a3">
-                <Grid>
-                    <Button Grid.Column="0" 
-                        Background="#bfdbfe"
-                        Foreground="#3730a3"
-                        FontSize="20"
-                        FontWeight="bold"
-                        BorderThickness="0"
-                        >
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Button Background="#bae6fd"
-                                        VerticalAlignment="Center" 
-                                        HorizontalAlignment="Center"
-                                        Cursor="Hand"
-                                        BorderThickness="0"
-                                        Padding="8"
-                                        Foreground="#1d4ed8"
-                                        Command="{Binding DangKyCommand}">
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
 
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Tiến hành đăng ký" Margin="0,0,10,0"></TextBlock>
-                                    </StackPanel>
-                                </Button>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                    <Button Background="#bae6fd"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center"
+                            Cursor="Hand"
+                            BorderThickness="0"
+                            Padding="8"
+                            Foreground="#3730a3"
+                            FontSize="20"
+                            Command="{Binding DangKyCommand}"
+                            Content="Tiến hành đăng ký"
+                            Margin="10,0,10,0"></Button>
 
-                </Grid>
+                    <Button Background="#bae6fd"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center"
+                            Cursor="Hand"
+                            BorderThickness="0"
+                            Padding="8"
+                            Foreground="#b91c1c"
+                            FontSize="20"
+                            Command="{Binding XoaIdHocPhanCommand}"
+                            Content="Xóa học phần đã lên lịch"></Button>
+                       
+                </StackPanel>
             </Border>
         </Grid>
     </Grid>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,20 +18,32 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
 {
     public class DangKyViewModel : ViewModelBase
     {
-        private List<HocPhanDaChon> hocPhans;
+        private ObservableCollection<HocPhanDaChon> hocPhans;
+        private List<string> idHocPhanXoa;
 
-        public List<HocPhanDaChon> HocPhans
+        public ObservableCollection<HocPhanDaChon> HocPhans
         {
             get { return hocPhans; }
             set { hocPhans = value; OnPropertyChanged(); }
         }
 
+
+        public List<string> IdHocPhanXoa
+        {
+            get { return idHocPhanXoa; }
+            set { idHocPhanXoa = value; OnPropertyChanged(); }
+        }
+
         public ICommand DangKyCommand { get; set; }
+        public ICommand XoaIdHocPhanCommand { get; set; }
+
         public DangKyViewModel()
         {
             HocPhans = DataHelper.ReadIdHocPhans();
+            IdHocPhanXoa = new List<string>();
             HocPhanDaChonStore.HocPhans = HocPhans;
             DangKyCommand = new AsyncRelayCommand(ExecuteDangKyCommand);
+            XoaIdHocPhanCommand = new RelayCommand(ExecuteXoaIdHocPhanCommand);
         }
 
         private async Task ExecuteDangKyCommand(object obj)
@@ -42,5 +55,20 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
             var ids = HocPhans.Select(h => h.Id).ToList();
             await MultiTaskSendAPI.Ins.DangKy(ids);
         }
+
+        private void ExecuteXoaIdHocPhanCommand(object obj)
+        {
+            foreach (var p in IdHocPhanXoa)
+            {
+                var hocPhan = HocPhans.Where(hp => hp.Id == p).FirstOrDefault();
+                if (hocPhan != null)
+                {
+                    HocPhans.Remove(hocPhan);
+                }
+            }
+            DataHelper.RemoveIdHocPhans(IdHocPhanXoa);
+            IdHocPhanXoa.Clear();
+        }
+
     }
 }

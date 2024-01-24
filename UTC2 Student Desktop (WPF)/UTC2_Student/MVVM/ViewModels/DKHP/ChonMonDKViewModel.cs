@@ -42,8 +42,10 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
             set { idHocPhans = value; OnPropertyChanged(); }
         }
 
+
         public ICommand LuuIdHocPhanCommand { get; set; }
 
+        public ICommand XoaIdHocPhanCommand { get; set; }
 
         public ChonMonDKViewModel()
         {
@@ -341,6 +343,13 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         private void ExecuteLuuIdHocPhanCommand(object obj)
         {
             var hocPhan = new HocPhanDaChon();
+
+            if(string.IsNullOrEmpty(IdHocPhans[0].Id))
+            {
+                MessageBox.Show("Vui lòng chọn lớp học phần");
+                return;
+            }
+
             if (string.IsNullOrEmpty(IdHocPhans[1].Id) == true)
             {
                 hocPhan.Id = IdHocPhans[0].Id;
@@ -355,6 +364,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
             }
 
             DataHelper.SaveIdHocPhans(hocPhan);
+            MessageBox.Show("Đã lưu");
             Reset();
         }
 

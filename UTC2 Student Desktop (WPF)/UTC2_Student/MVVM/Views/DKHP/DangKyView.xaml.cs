@@ -21,11 +21,24 @@ namespace UTC2_Student.MVVM.Views.DKHP
     /// </summary>
     public partial class DangKyView : UserControl
     {
+        private DangKyViewModel dataContext;
         public DangKyView()
         {
             InitializeComponent();
-            DangKyViewModel dataContext = new DangKyViewModel();
+            dataContext = new DangKyViewModel();
             this.DataContext = dataContext;
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            dataContext.IdHocPhanXoa.Add(checkBox.Tag.ToString());
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            dataContext.IdHocPhanXoa.Remove(checkBox.Tag.ToString());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using UTC2_Student.API.IntermediateModels.ApiResponses;
+using UTC2_Student.Repositories.IntermediateModels.ApiResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
 namespace UTC2_Student.API
@@ -96,23 +98,46 @@ namespace UTC2_Student.API
 
         public static void SaveIdHocPhans(HocPhanDaChon hocPhanDaChon)
         {
-            List<HocPhanDaChon> hocPhanDaChons = ReadIdHocPhans();
-            hocPhanDaChons.Add(hocPhanDaChon);
+            ObservableCollection<HocPhanDaChon> hocPhanDaChons = ReadIdHocPhans();
+
+            if(hocPhanDaChons.Any(p => p.Id == hocPhanDaChon.Id) == false)
+            {
+                hocPhanDaChons.Add(hocPhanDaChon);
+            }
 
             string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
             File.WriteAllText(IdHocPhanPath, json);
         }
 
-        public static List<HocPhanDaChon> ReadIdHocPhans()
+        public static ObservableCollection<HocPhanDaChon> ReadIdHocPhans()
         {
             string jsonText = File.ReadAllText(IdHocPhanPath);
-            List<HocPhanDaChon> hocPhanDaChons = JsonConvert.DeserializeObject<List<HocPhanDaChon>>(jsonText);
+            ObservableCollection<HocPhanDaChon> hocPhanDaChons = JsonConvert.DeserializeObject<ObservableCollection<HocPhanDaChon>>(jsonText);
             if (hocPhanDaChons == null)
             {
-                return new List<HocPhanDaChon>();
+                return new ObservableCollection<HocPhanDaChon>();
             }
             return hocPhanDaChons;
         }
+
+        public static void RemoveIdHocPhans(List<string> ids)
+        {
+            ObservableCollection<HocPhanDaChon> hocPhanDaChons = ReadIdHocPhans();
+
+            foreach (var p in ids)
+            {
+                var hocPhan = hocPhanDaChons.Where(hp => hp.Id == p).FirstOrDefault();
+
+                if (hocPhan != null)
+                {
+                    hocPhanDaChons.Remove(hocPhan);
+                }
+            }
+
+            string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
+            File.WriteAllText(IdHocPhanPath, json);
+        }
+
 
         //public static void RemoveAccount()
         //{
