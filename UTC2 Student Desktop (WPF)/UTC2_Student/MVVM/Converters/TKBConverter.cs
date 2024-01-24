@@ -10,14 +10,14 @@ namespace UTC2_Student.MVVM.Converters
 {
     public class TKBConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
                 return "Không có";
             }
 
-            string updateString = value.ToString();
+            string? updateString = value.ToString();
             if (updateString == null)
             {
                 return null;
@@ -31,9 +31,9 @@ namespace UTC2_Student.MVVM.Converters
             return updateString;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string updateString = value.ToString();
+            string? updateString = value.ToString();
 
             return updateString;
         }

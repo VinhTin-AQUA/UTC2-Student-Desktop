@@ -32,13 +32,19 @@ namespace UTC2_Student.MVVM.Views.DKHP
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             var checkBox = sender as CheckBox;
-            dataContext.IdHocPhanXoa.Add(checkBox.Tag.ToString());
+            if(checkBox != null)
+            {
+                dataContext.IdHocPhanXoa.Add(checkBox.Tag.ToString()!);
+            }
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             var checkBox = sender as CheckBox;
-            dataContext.IdHocPhanXoa.Remove(checkBox.Tag.ToString());
+            if (checkBox != null)
+            {
+                dataContext.IdHocPhanXoa.Remove(checkBox.Tag.ToString()!);
+            }
         }
     }
 }

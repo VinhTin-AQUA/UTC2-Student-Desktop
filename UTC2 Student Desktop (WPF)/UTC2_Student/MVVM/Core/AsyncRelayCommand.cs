@@ -10,7 +10,7 @@ namespace UTC2_Student.MVVM.Core
     public class AsyncRelayCommand : ICommand
     {
         private readonly Func<object, Task> _execute;
-        private readonly Predicate<object> _canExecute;
+        private readonly Predicate<object>? _canExecute;
 
 
         public event EventHandler? CanExecuteChanged
@@ -20,7 +20,9 @@ namespace UTC2_Student.MVVM.Core
         }
 
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public AsyncRelayCommand(Func<object, Task> execute)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             _execute = execute;
             _canExecute = null;
@@ -34,17 +36,17 @@ namespace UTC2_Student.MVVM.Core
         //public AsyncRelayCommand(Func<object, Task> execute) : this(execute, null)
         //{ }
 
-        public virtual bool CanExecute(object parameter)
+        public virtual bool CanExecute(object? parameter)
         {
             //return _canExecute is null || _canExecute(parameter);
-            return _canExecute == null ? true : _canExecute(parameter);
+            return _canExecute == null ? true : _canExecute(parameter!);
         }
 
-        public async void Execute(object parameter)
+        public async void Execute(object? parameter)
         {
             try
             {
-                await _execute.Invoke(parameter);
+                await _execute.Invoke(parameter!);
             }
             catch (Exception ex)
             {

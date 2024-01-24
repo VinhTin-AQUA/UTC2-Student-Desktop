@@ -39,19 +39,23 @@ namespace UTC2_Student.MVVM.Views.DKHP
 
         private async void lopHocPhan_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox combo = sender as ComboBox;
+            ComboBox? combo = sender as ComboBox;
 
             if (combo != null)
             {
                 chonMonDKViewModel.Reset();
-                MonHoc monHoc = combo.SelectedItem as MonHoc;
-                await chonMonDKViewModel.GetLopHocPhanByMonHoc(monHoc.iD_MONHOC);
+                MonHoc? monHoc = combo.SelectedItem as MonHoc;
+
+                if (monHoc != null)
+                {
+                    await chonMonDKViewModel.GetLopHocPhanByMonHoc(monHoc.iD_MONHOC);
+                }
             }
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox check = sender as CheckBox;
+            CheckBox? check = sender as CheckBox;
             if(check != null)
             {
                 chonMonDKViewModel.SoLopHocPhanDaChonMoiMon++;
@@ -61,8 +65,12 @@ namespace UTC2_Student.MVVM.Views.DKHP
                     chonMonDKViewModel.SoLopHocPhanDaChonMoiMon = 2;
                 } else
                 {
+#pragma warning disable CS8601 // Possible null reference assignment.
                     chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon - 1].Id = check.Tag.ToString();
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning disable CS8601 // Possible null reference assignment.
                     chonMonDKViewModel.IdHocPhans[chonMonDKViewModel.SoLopHocPhanDaChonMoiMon - 1].Name = check.Content.ToString();
+#pragma warning restore CS8601 // Possible null reference assignment.
                 }
             }
         }

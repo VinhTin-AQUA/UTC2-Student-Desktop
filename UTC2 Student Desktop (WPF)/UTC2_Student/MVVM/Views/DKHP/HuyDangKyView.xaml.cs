@@ -32,7 +32,7 @@ namespace UTC2_Student.MVVM.Views.DKHP
             if (comboBox.SelectedItem != null)
             {
                 var r = (DotHocPhan)comboBox.SelectedItem;
-                await dataContext.GetHocPhanDKTheoDot(r.iddot);
+                await dataContext!.GetHocPhanDKTheoDot(r.iddot);
             }
         }
     }

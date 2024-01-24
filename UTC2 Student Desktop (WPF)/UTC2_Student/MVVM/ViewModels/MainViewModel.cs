@@ -47,7 +47,9 @@ namespace UTC2_Student.MVVM.ViewModels
 
         #endregion
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public MainViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             IsShowed = true;
             NavigateNotifycationCommand = new RelayCommand(ExecuteNavigateNotifycationCommand);
@@ -57,7 +59,7 @@ namespace UTC2_Student.MVVM.ViewModels
             NavigateKTXCommand = new RelayCommand(ExecuteNavigateKTXCommand);
             NavigateDiemCommand = new RelayCommand(ExecuteNavigateDiemCommand);
             NavigateTKBCommand = new RelayCommand(ExecuteNavigateTKBCommand);
-            //UserName = AuthModel.Instance.result[0].hodem + AuthModel.Instance.result[0].ten;
+            UserName = AuthModel.Instance!.result[0].hodem + AuthModel.Instance.result[0].ten;
 
             // default child view
             CurrntChildView = new NotificationViewModel();

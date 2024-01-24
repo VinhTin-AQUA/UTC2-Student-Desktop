@@ -11,6 +11,6 @@ namespace UTC2_Student.API.IntermediateModels.NotificationResponses
         public int count {  get; set; }
         public int totalPages { get; set; }
         public int currentPage { get; set; } 
-        public List<Notice> rows { get; set; }
+        public List<Notice>? rows { get; set; }
     }
 }

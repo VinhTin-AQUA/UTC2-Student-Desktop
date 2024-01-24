@@ -54,7 +54,9 @@ namespace UTC2_Student.MVVM.ViewModels
 
         public ICommand LoginCommand { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public LoginViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             IsShowed = true;
             CanLogin = true;

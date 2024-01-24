@@ -47,7 +47,9 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
 
         public ICommand XoaIdHocPhanCommand { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ChonMonDKViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             LuuIdHocPhanCommand = new RelayCommand(ExecuteLuuIdHocPhanCommand);
             IdHocPhans = [new HocPhanDaChon(), new HocPhanDaChon(), new HocPhanDaChon()];

@@ -34,17 +34,21 @@ namespace UTC2_Student.MVVM.ViewModels
             set { hocPhiDaThu = value; OnPropertyChanged(); }
         }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public HocPhiViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             
         }
 
         public async Task GetAllHocPhi()
         {
+#pragma warning disable CS8601 // Possible null reference assignment.
             HocPhiModels = await ApiRepository.Ins.GetAllHocPhi();
+#pragma warning restore CS8601 // Possible null reference assignment.
 
-            HocPhiPhaiNop = HocPhiModels.Sum(p => p.PHAI_THU);
-            HocPhiDaThu = HocPhiModels.Sum(p => p.THU_DUOC);
+            HocPhiPhaiNop = HocPhiModels!.Sum(p => p.PHAI_THU);
+            HocPhiDaThu = HocPhiModels!.Sum(p => p.THU_DUOC);
         }
 
 

@@ -13,7 +13,7 @@ namespace UTC2_Student.Repositories.IntermediateModels.ApiResponses
         public float is_check_hocruocvadiem { get; set; }
         public float is_check_tuchon { get; set; }
         public float diem_tienquyet_candat { get; set; }
-        public string dot_dky { get; set; }
+        public string dot_dky { get; set; } = "";
         public float is_check_trung_tkb { get; set; }
         public float id_hp_thamso { get; set; }
         public float is_cho_nangdiem { get; set; }
@@ -36,17 +36,17 @@ namespace UTC2_Student.Repositories.IntermediateModels.ApiResponses
         public float iS_KIEMTRA_2DOT_NOP_TYLE { get; set; }
         public float iS_CHECK_DOAN_DKY { get; set; }
         public float tylE_HOCTRUNG { get; set; }
-        public string ngay_bdau { get; set; }
-        public string hoC_KY { get; set; }
-        public string ngay_kthuc { get; set; }
-        public string kiemtraDK { get; set; }
-        public string ghichuDK { get; set; }
+        public string ngay_bdau { get; set; } = "";
+        public string hoC_KY { get; set; } = "";
+        public string ngay_kthuc { get; set; } = "";
+        public string kiemtraDK { get; set; } = "";
+        public string ghichuDK { get; set; } = "";
         public bool hienthiDK { get; set; }
-        public string ngay_bdau_huy { get; set; }
-        public string ngay_kthuc_huy { get; set; }
-        public string kiemtraHuy { get; set; }
-        public string ghichuHuy { get; set; }
+        public string ngay_bdau_huy { get; set; } = "";
+        public string ngay_kthuc_huy { get; set; } = "";
+        public string kiemtraHuy { get; set; } = "";
+        public string ghichuHuy { get; set; } = "";
         public bool hienthiHuy { get; set; }
-        public string gio_start { get; set; }
+        public string gio_start { get; set; } = "";
     }
 }

@@ -14,9 +14,9 @@ namespace UTC2_Student.MVVM.Converters
         {
             decimal updateString = System.Convert.ToDecimal(value);
 
-            if (updateString == null)
+            if (value == null)
             {
-                return null;
+                return 0;
             }
             string formattedNumber = string.Format("{0:N0}", updateString) + " VNĐ";
             return formattedNumber;

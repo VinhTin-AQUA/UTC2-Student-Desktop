@@ -38,7 +38,9 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         public ICommand DangKyCommand { get; set; }
         public ICommand XoaIdHocPhanCommand { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public DangKyViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             HocPhans = DataHelper.ReadIdHocPhans();
             IdHocPhanXoa = new List<string>();
@@ -59,6 +61,13 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
 
         private void ExecuteXoaIdHocPhanCommand(object obj)
         {
+            if(IdHocPhanXoa.Count() <= 0)
+            {
+                System.Windows.MessageBox.Show("Vui lòng chọn học phần", "Chưa chọn lớp học phần",
+                MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             var r = System.Windows.MessageBox.Show("Bạn có muốn xóa không?", "Xóa học phần lên lịch",
                 MessageBoxButton.OKCancel, MessageBoxImage.Question);
 

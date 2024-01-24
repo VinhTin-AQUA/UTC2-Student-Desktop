@@ -10,9 +10,9 @@ namespace UTC2_Student.API.IntermediateModels.ApiResponses
 {
     public class HocPhanDaChon : INotifyPropertyChanged
     {
-        private string id;
-        private string name;
-        private string status;
+        private string id = "";
+        private string name = "";
+        private string status = "";
 
         public string Id 
         {
@@ -33,7 +33,7 @@ namespace UTC2_Student.API.IntermediateModels.ApiResponses
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

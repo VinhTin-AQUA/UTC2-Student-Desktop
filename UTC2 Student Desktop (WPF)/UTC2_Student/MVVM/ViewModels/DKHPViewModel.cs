@@ -26,7 +26,9 @@ namespace UTC2_Student.MVVM.ViewModels
         public ICommand NavigateHDSD { get; set; }
 
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public DKHPViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             NavigateKQDK = new RelayCommand(ExecuteNavigateKQDK);
             NavigateChonMon = new RelayCommand(ExecuteNavigateChonMon);
@@ -38,7 +40,7 @@ namespace UTC2_Student.MVVM.ViewModels
             ExecuteNavigateKQDK(null);
         }
 
-        private void ExecuteNavigateKQDK(object obj)
+        private void ExecuteNavigateKQDK(object? obj)
         {
             CurrentChildCiew = new KetQuaDKViewModel();
         }

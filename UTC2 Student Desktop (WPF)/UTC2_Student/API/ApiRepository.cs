@@ -20,7 +20,7 @@ namespace UTC2_Student.Repositories
 {
     public class ApiRepository
     {
-        private static ApiRepository _ins = null;
+        private static ApiRepository? _ins = null;
 
         public static ApiRepository Ins
         {
@@ -55,7 +55,7 @@ namespace UTC2_Student.Repositories
             var response = await GET(dotDKUrl, true);
             var content = await response.Content.ReadAsStringAsync();
             ThongTinDotHocPhan? list = JsonConvert.DeserializeObject<ThongTinDotHocPhan>(content);
-            return list!.monhoccombox;
+            return list!.monhoccombox!;
         }
 
         public async Task<List<DotHocPhan>> GetDotDK()
@@ -83,7 +83,7 @@ namespace UTC2_Student.Repositories
             }
         }
 
-        public async Task<HttpResponseMessage> Login(string mssv, string pass)
+        public async Task<HttpResponseMessage?> Login(string mssv, string pass)
         {
             using (var httpCLient = new HttpClient())
             {
@@ -91,13 +91,13 @@ namespace UTC2_Student.Repositories
                 string loginUrl = Urls.LoginApi();
                 var loginInfo = new { Email = mssv, Password = pass };
 
-                LoginModel.Instance.MSSV = mssv;
+                LoginModel.Instance!.MSSV = mssv;
                 LoginModel.Instance.Password = pass;
 
                 var jsonContext = new StringContent(JsonConvert.SerializeObject(loginInfo), System.Text.Encoding.UTF8, "application/json");
 
                 // goi api
-                HttpResponseMessage response = null;
+                HttpResponseMessage? response = null;
 
                 //await Task.Delay(3000);
                 //response = await httpCLient.PostAsync(loginUrl, jsonContext);
@@ -255,7 +255,7 @@ namespace UTC2_Student.Repositories
 
         #region thong bao
 
-        public async Task<NotificationResponse> GetThongBaos(int currentPage = 1)
+        public async Task<NotificationResponse?> GetThongBaos(int currentPage = 1)
         {
             using (var httpCLient = new HttpClient())
             {
@@ -276,9 +276,9 @@ namespace UTC2_Student.Repositories
 
         #region hoc phi
 
-        public async Task<List<HocPhiModel>> GetAllHocPhi()
+        public async Task<List<HocPhiModel>?> GetAllHocPhi()
         {
-            var sinhVienId = AuthModel.Instance.result[0].sinhvieN_ID;
+            var sinhVienId = AuthModel.Instance!.result[0].sinhvieN_ID;
             var maDvQl = AuthModel.Instance.result[0].mA_DVIQLY;
 
             var payload = new
@@ -299,7 +299,7 @@ namespace UTC2_Student.Repositories
                 r = r.Remove(r.Length - 1);
                 r = r.Replace("\\", "");
                
-                List<HocPhiModel> hocPhis = JsonConvert.DeserializeObject<List<HocPhiModel>>(r);
+                List<HocPhiModel>? hocPhis = JsonConvert.DeserializeObject<List<HocPhiModel>>(r);
                 return hocPhis;
             }
         }
@@ -308,11 +308,11 @@ namespace UTC2_Student.Repositories
 
         #region lich thi
 
-        public async Task<List<LichThiModel>> GetLichThiByHocKy()
+        public async Task<List<LichThiModel>?> GetLichThiByHocKy()
         {
             var data = new
             {
-                SINHVIEN_ID = AuthModel.Instance.result[0].sinhvieN_ID,
+                SINHVIEN_ID = AuthModel.Instance!.result[0].sinhvieN_ID,
                 MA_DVIQLY = AuthModel.Instance.result[0].mA_DVIQLY,
                 NC_OR_TC = AuthModel.Instance.result[0].nienchE_OR_TINCHI,
                 NAM_HOC = "0",
@@ -334,7 +334,7 @@ namespace UTC2_Student.Repositories
                 content = content.Remove(0, 1);
                 content = content.Remove(content.Length-1);
                 content = content.Replace("\\", "");
-                List<LichThiModel> list = JsonConvert.DeserializeObject<List<LichThiModel>>(content);
+                List<LichThiModel>? list = JsonConvert.DeserializeObject<List<LichThiModel>>(content);
                 return list;
             }
         }
@@ -343,12 +343,12 @@ namespace UTC2_Student.Repositories
 
         #region KTX
 
-        public async Task<List<LichSuKTX>> GetLichSuKTX()
+        public async Task<List<LichSuKTX>?> GetLichSuKTX()
         {
             var url = Urls.GetLichSuKTX();
             var data = new
             {
-                Student_ID = AuthModel.Instance.result[0].sinhvieN_ID
+                Student_ID = AuthModel.Instance!.result[0].sinhvieN_ID
             };
 
             var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
@@ -369,7 +369,7 @@ namespace UTC2_Student.Repositories
                 content = content.Remove(0, 1);
                 content = content.Remove(content.Length-1);
 
-                List<LichSuKTX> list = JsonConvert.DeserializeObject<List<LichSuKTX>>(content);
+                List<LichSuKTX>? list = JsonConvert.DeserializeObject<List<LichSuKTX>>(content);
                 return list;
             }
         }

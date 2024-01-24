@@ -9,6 +9,6 @@ namespace UTC2_Student.Repositories.IntermediateModels.ApiResponses
     public class MonHoc
     {
         public int iD_MONHOC { get; set; }
-        public string teN_MONHOC { get; set; }
+        public string teN_MONHOC { get; set; } = "";
     }
 }

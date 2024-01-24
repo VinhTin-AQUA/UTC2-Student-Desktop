@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using UTC2_Student.API.IntermediateModels.ApiResponses;
 using UTC2_Student.Repositories;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 using UTC2_Student.Stores;
@@ -14,10 +15,10 @@ namespace UTC2_Student.API
     public class MultiTaskSendAPI
     {
         static int completedTasksTotal = 0;
-        static List<CancellationTokenSource> ctss; // quản lý trạng thái run của các tác vụ A,B
+        static List<CancellationTokenSource>? ctss; // quản lý trạng thái run của các tác vụ A,B
         //CancellationTokenSource loginSource = null;
 
-        private static MultiTaskSendAPI ins = null;
+        private static MultiTaskSendAPI? ins = null;
 
         public static MultiTaskSendAPI Ins
         {
@@ -37,10 +38,13 @@ namespace UTC2_Student.API
 
         public void SendMessage(string id, string message)
         {
-            var hocPhan = HocPhanDaChonStore.HocPhans
+            HocPhanDaChon? hocPhan = HocPhanDaChonStore.HocPhans!
                 .Where(h => h.Id == id)
                 .FirstOrDefault();
-            hocPhan.Status = message;
+            if(hocPhan != null)
+            {
+                hocPhan.Status = message;
+            }
         }
 
         public void LoggedInFail(string id)
@@ -53,7 +57,7 @@ namespace UTC2_Student.API
             // đợi 5p rồi mới đăng nhập
             //await Task.Delay(TimeSpan.FromMinutes(5));
 
-            var response = await ApiRepository.Ins.Login(LoginModel.Instance.MSSV, LoginModel.Instance.Password);
+            var response = await ApiRepository.Ins.Login(LoginModel.Instance!.MSSV, LoginModel.Instance.Password);
 
             ctss = new List<CancellationTokenSource>();
             await DangKyHP(ids);
@@ -98,7 +102,7 @@ namespace UTC2_Student.API
         {
             while (true)
             {
-                if (ctss[cancelIndex].Token.IsCancellationRequested == false)
+                if (ctss![cancelIndex].Token.IsCancellationRequested == false)
                 {
                     // đăng ký
                     var response = await ApiRepository.Ins.GuiApiDK(id);

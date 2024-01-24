@@ -47,7 +47,9 @@ namespace UTC2_Student.MVVM.ViewModels
         public ICommand NextPageCommand { get; set; }
 
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public NotificationViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             Task.Run(() => GetThongBao());
 
@@ -59,10 +61,14 @@ namespace UTC2_Student.MVVM.ViewModels
 
         private async Task GetThongBao()
         {
+#pragma warning disable CS8601 // Possible null reference assignment.
             NoTificationResponse = await ApiRepository.Ins.GetThongBaos(1);
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             CurrentPage = NoTificationResponse.responseData.currentPage;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             TotalPages = NoTificationResponse.responseData.totalPages;
-            Notices = NoTificationResponse.responseData.rows;
+            Notices = NoTificationResponse.responseData.rows!;
         }
 
         private async Task ExexutePrevPageCommand(object obj)
@@ -72,8 +78,10 @@ namespace UTC2_Student.MVVM.ViewModels
             {
                 CurrentPage = 1;
             }
+#pragma warning disable CS8601 // Possible null reference assignment.
             NoTificationResponse = await ApiRepository.Ins.GetThongBaos(CurrentPage);
-            Notices = NoTificationResponse.responseData.rows;
+#pragma warning restore CS8601 // Possible null reference assignment.
+            Notices = NoTificationResponse!.responseData!.rows!;
         }
 
         private async Task ExecuteNextPageCommand(object obj)
@@ -83,8 +91,10 @@ namespace UTC2_Student.MVVM.ViewModels
             {
                 CurrentPage = TotalPages;
             }
+#pragma warning disable CS8601 // Possible null reference assignment.
             NoTificationResponse = await ApiRepository.Ins.GetThongBaos(CurrentPage);
-            Notices = NoTificationResponse.responseData.rows;
+#pragma warning restore CS8601 // Possible null reference assignment.
+            Notices = NoTificationResponse!.responseData!.rows!;
         }
 
     }

@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
              xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels"
              xmlns:view="clr-namespace:UTC2_Student.MVVM.Views"
-             
+             xmlns:converter="clr-namespace:UTC2_Student.MVVM.Converters"
+
               xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:faMaterial="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp.material"
             
@@ -19,7 +20,7 @@
 
     <UserControl.Resources>
 
-        <view:DateConverter x:Key="dateConverter"></view:DateConverter>
+        <converter:DateConverter x:Key="dateConverter"></converter:DateConverter>
 
         <Style x:Key="tbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"></Setter>

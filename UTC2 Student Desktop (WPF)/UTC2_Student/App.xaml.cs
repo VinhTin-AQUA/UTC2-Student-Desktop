@@ -69,9 +69,9 @@ namespace UTC2_Student
             DataHelper.ReadAccount();
             DataHelper.ReadAuthModel();
 
-            if(LoginModel.Instance.MSSV == "" ||
+            if(LoginModel.Instance!.MSSV == "" ||
                 LoginModel.Instance.Password == "" ||
-                AuthModel.Instance.result == null ||
+                AuthModel.Instance!.result == null ||
                 AuthModel.Instance.v == null)
             {
                 return false;

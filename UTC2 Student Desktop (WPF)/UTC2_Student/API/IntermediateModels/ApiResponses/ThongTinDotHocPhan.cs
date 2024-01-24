@@ -16,7 +16,7 @@ namespace UTC2_Student.Repositories.IntermediateModels.ApiResponses
 
         public List<DotHocPhan> dotHocPhans { get; set; } = [];
 
-        public List<MonHoc> monhoccombox { get; set; }
+        public List<MonHoc>? monhoccombox { get; set; }
 
         public List<KhoaNganh> khoanganh { get; set; } = [];
 
@@ -30,14 +30,14 @@ namespace UTC2_Student.Repositories.IntermediateModels.ApiResponses
         public object[] lichsuhuy { get; set; } = [];
 
 
-        public DemDSHuy demdshuy { get; set; }
-        public TSDangKyMonHoc tsdangkymonhoc { get; set; }
+        public DemDSHuy? demdshuy { get; set; }
+        public TSDangKyMonHoc? tsdangkymonhoc { get; set; }
 
         public object[] tsMonHoc { get; set; } = [];
         public object[] checkedTienQuyet { get; set; } = [];
         public object[] ktcheckdt { get; set; } = [];
 
-        public ThamSoTinChi thamsotinchi { get; set; }
+        public ThamSoTinChi? thamsotinchi { get; set; }
 
         public int selectedKN { get; set; }
         public object? listTrangthaimon { get; set; } = null;

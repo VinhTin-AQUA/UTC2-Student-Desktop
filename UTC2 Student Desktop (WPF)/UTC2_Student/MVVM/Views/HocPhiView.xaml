@@ -109,6 +109,7 @@
                         <Border BorderBrush="#271756" 
                         BorderThickness="1" 
                         Background="White" 
+                                CornerRadius="10"
                         Margin="20,5,20,5"
                                 Padding="10">
                             <StackPanel>

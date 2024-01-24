@@ -21,7 +21,7 @@ namespace UTC2_Student.MVVM.Views
     /// </summary>
     public partial class LichThiView : UserControl
     {
-        private LichThiViewModel lichThiViewModel = null;
+        private LichThiViewModel? lichThiViewModel = null;
         public LichThiView()
         {
             InitializeComponent();
@@ -31,7 +31,7 @@ namespace UTC2_Student.MVVM.Views
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            await lichThiViewModel.GetLichThiByHocKy();
+            await lichThiViewModel!.GetLichThiByHocKy();
         }
     }
 }

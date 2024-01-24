@@ -33,7 +33,9 @@ namespace UTC2_Student.MVVM.ViewModels
             set { statusText = value; OnPropertyChanged(); }
         }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public KTXViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             Status = "Visible";
             StatusText = "Hidden";

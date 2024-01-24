@@ -8,8 +8,8 @@ namespace UTC2_Student.Repositories.IntermediateModels
 {
     public class Notice
     {
-        public string IdHocPhan { get; set; }
+        public string IdHocPhan { get; set; } = "";
         public bool Status { get; set; }
-        public string Message { get; set; }
+        public string Message { get; set; } = "";
     }
 }

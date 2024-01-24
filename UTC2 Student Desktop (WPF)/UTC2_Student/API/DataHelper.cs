@@ -1,16 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 using UTC2_Student.API.IntermediateModels.ApiResponses;
-using UTC2_Student.Repositories.IntermediateModels.ApiResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
 namespace UTC2_Student.API
@@ -44,7 +37,7 @@ namespace UTC2_Student.API
             get { return dataDirectory + idHocPhanPath; }
         }
 
-        public static bool CheckForInternetConnection(int timeoutMs = 10000, string url = null)
+        public static bool CheckForInternetConnection(int timeoutMs = 10000, string? url = null)
         {
             try
             {
@@ -58,7 +51,9 @@ namespace UTC2_Student.API
                         "http://www.gstatic.com/generate_204",
                 };
 
-                var request = (HttpWebRequest)WebRequest.Create(url);
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
+                HttpWebRequest? request = (HttpWebRequest)WebRequest.Create(url);
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
                 request.KeepAlive = false;
                 request.Timeout = timeoutMs;
                 using (var response = (HttpWebResponse)request.GetResponse())
@@ -112,7 +107,7 @@ namespace UTC2_Student.API
         public static ObservableCollection<HocPhanDaChon> ReadIdHocPhans()
         {
             string jsonText = File.ReadAllText(IdHocPhanPath);
-            ObservableCollection<HocPhanDaChon> hocPhanDaChons = JsonConvert.DeserializeObject<ObservableCollection<HocPhanDaChon>>(jsonText);
+            ObservableCollection<HocPhanDaChon>? hocPhanDaChons = JsonConvert.DeserializeObject<ObservableCollection<HocPhanDaChon>>(jsonText);
             if (hocPhanDaChons == null)
             {
                 return new ObservableCollection<HocPhanDaChon>();
