@@ -19,15 +19,25 @@ namespace UTC2_Student
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
             Init();
+            Loading loading = new Loading();
+            loading.Show();
             if (await CheckLogin() == false)
             {
+                WindowStore.LoginView.Left = loading.Left;
+                WindowStore.LoginView.Top = loading.Top;
+                WindowStore.LoginView.Width = loading.Width;
+                WindowStore.LoginView.Height = loading.Height;
                 WindowStore.LoginView.Show();
             }
             else
             {
+                WindowStore.MainWindow.Left = loading.Left;
+                WindowStore.MainWindow.Top = loading.Top;
+                WindowStore.MainWindow.Width = loading.Width;
+                WindowStore.MainWindow.Height = loading.Height;
                 WindowStore.MainWindow.Show();
             }
-
+            loading.Close();
             //WindowStore.MainWindow.Show();
         }
 

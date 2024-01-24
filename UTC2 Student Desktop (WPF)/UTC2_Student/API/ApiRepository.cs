@@ -14,6 +14,7 @@ using UTC2_Student.API.IntermediateModels.LichThi;
 using UTC2_Student.API.IntermediateModels.NotificationResponses;
 using UTC2_Student.Repositories.IntermediateModels.ApiResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
+using static System.Net.WebRequestMethods;
 
 namespace UTC2_Student.Repositories
 {
@@ -243,6 +244,8 @@ namespace UTC2_Student.Repositories
         {
             using (var httpCLient = new HttpClient())
             {
+                httpCLient.Timeout = TimeSpan.FromDays(10);
+
                 var url = Urls.GetThongBaoApi(currentPage, 20);
                 var response = await httpCLient.GetAsync(url);
 
@@ -277,6 +280,7 @@ namespace UTC2_Student.Repositories
             var getAllHocPhiUrl = Urls.GetHocPhiApi();
             using (var httpCLient = new HttpClient())
             {
+                httpCLient.Timeout = TimeSpan.FromDays(10);
                 HttpResponseMessage response = await httpCLient.PostAsync(getAllHocPhiUrl, jsonCOntent);
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\\/", "/");
@@ -310,6 +314,7 @@ namespace UTC2_Student.Repositories
 
             using(var http = new HttpClient())
             {
+                http.Timeout = TimeSpan.FromDays(10);
                 var response = await http.PostAsync(url, jsonContent);
 
                 var content = await response.Content.ReadAsStringAsync();
@@ -325,7 +330,6 @@ namespace UTC2_Student.Repositories
 
         #endregion
 
-
         #region KTX
 
         public async Task<List<LichSuKTX>> GetLichSuKTX()
@@ -340,6 +344,7 @@ namespace UTC2_Student.Repositories
 
             using (var http = new HttpClient())
             {
+                http.Timeout = TimeSpan.FromDays(10);
                 http.DefaultRequestHeaders.Add("authorization", "646b10fa650c93c024244f49f1a88ac7fft123");
                 var response = await http.PostAsync(url, jsonContent);
 
@@ -359,7 +364,6 @@ namespace UTC2_Student.Repositories
         }
 
     #endregion
-
 
 
 
