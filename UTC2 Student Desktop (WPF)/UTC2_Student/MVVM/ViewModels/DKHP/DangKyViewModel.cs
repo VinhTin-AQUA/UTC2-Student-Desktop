@@ -44,7 +44,6 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         {
             _ReadIdHocPhan();
             IdHocPhanXoa = new List<string>();
-            HocPhanDaChonStore.HocPhans = HocPhans;
             DangKyCommand = new AsyncRelayCommand(ExecuteDangKyCommand);
             XoaIdHocPhanCommand = new AsyncRelayCommand(ExecuteXoaIdHocPhanCommand);
         }
@@ -52,6 +51,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         public async void _ReadIdHocPhan()
         {
             HocPhans = await DataHelper.ReadIdHocPhans();
+            HocPhanDaChonStore.HocPhans = HocPhans;
         }
 
         private async Task ExecuteDangKyCommand(object obj)
