@@ -46,7 +46,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
             IdHocPhanXoa = new List<string>();
             HocPhanDaChonStore.HocPhans = HocPhans;
             DangKyCommand = new AsyncRelayCommand(ExecuteDangKyCommand);
-            XoaIdHocPhanCommand = new RelayCommand(ExecuteXoaIdHocPhanCommand);
+            XoaIdHocPhanCommand = new AsyncRelayCommand(ExecuteXoaIdHocPhanCommand);
         }
 
         public async void _ReadIdHocPhan()
@@ -64,7 +64,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
             await MultiTaskSendAPI.Ins.DangKy(ids);
         }
 
-        private void ExecuteXoaIdHocPhanCommand(object obj)
+        private async Task ExecuteXoaIdHocPhanCommand(object obj)
         {
             if(IdHocPhanXoa.Count() <= 0)
             {
@@ -89,7 +89,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
                     HocPhans.Remove(hocPhan);
                 }
             }
-            DataHelper.RemoveIdHocPhans(IdHocPhanXoa);
+            await DataHelper.RemoveIdHocPhans(IdHocPhanXoa);
             IdHocPhanXoa.Clear();
         }
     }

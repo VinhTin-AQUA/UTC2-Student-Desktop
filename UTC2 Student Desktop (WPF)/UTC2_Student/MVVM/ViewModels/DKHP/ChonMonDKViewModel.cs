@@ -51,7 +51,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         public ChonMonDKViewModel()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            LuuIdHocPhanCommand = new RelayCommand(ExecuteLuuIdHocPhanCommand);
+            LuuIdHocPhanCommand = new AsyncRelayCommand(ExecuteLuuIdHocPhanCommand);
             IdHocPhans = [new HocPhanDaChon(), new HocPhanDaChon(), new HocPhanDaChon()];
         }
 
@@ -342,7 +342,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
             //};
         }
 
-        private void ExecuteLuuIdHocPhanCommand(object obj)
+        private async Task ExecuteLuuIdHocPhanCommand(object obj)
         {
             var hocPhan = new HocPhanDaChon();
 
@@ -365,7 +365,7 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
                 hocPhan.Status = "Sẵn sàng đăng ký";
             }
 
-            DataHelper.SaveIdHocPhans(hocPhan);
+            await DataHelper.SaveIdHocPhans(hocPhan);
             MessageBox.Show("Đã lưu");
             Reset();
         }

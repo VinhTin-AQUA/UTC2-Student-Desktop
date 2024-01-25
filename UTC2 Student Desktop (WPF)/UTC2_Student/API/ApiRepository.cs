@@ -120,8 +120,8 @@ namespace UTC2_Student.Repositories
                             DataHelper.ClearData();
                             return null;
                         }
-                        DataHelper.SaveAccount();
-                        DataHelper.SaveAuthModel();
+                        await DataHelper.SaveAccount();
+                        await DataHelper.SaveAuthModel();
                         return response;
                     }
 

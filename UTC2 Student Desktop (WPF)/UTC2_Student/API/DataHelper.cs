@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Windows.Controls;
 using UTC2_Student.API.IntermediateModels.ApiResponses;
 using UTC2_Student.Repositories.IntermediateModels.Auth;
 
@@ -11,12 +12,9 @@ namespace UTC2_Student.API
     public static class DataHelper
     {
         private static readonly string dataDirectory = Directory.GetCurrentDirectory() + @"/Data";
-
         private static readonly string accountDataPath = @"/account.json";
-
         private static readonly string authModelDataPath = @"/auth_model.json";
         private static readonly string idHocPhanPath = @"/idHocPhans.json";
-        
 
         public static string DataDirectory
         {
@@ -90,21 +88,19 @@ namespace UTC2_Student.API
                 }
             }
             LoginModel.Instance = JsonConvert.DeserializeObject<LoginModel>(jsonText);
-            int t = 0;
         }
 
         public static async Task ClearAccount()
         {
             var account = new
             {
+                MSSV = "",
+                Password = ""
             };
             string json = JsonConvert.SerializeObject(account, Formatting.Indented);
-            using (var fs = new FileStream(AccountDataPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            using (StreamWriter sw = new StreamWriter(AccountDataPath, false))
             {
-                using (StreamWriter sw = new StreamWriter(fs))
-                {
-                    await sw.WriteAsync(json);
-                }
+                await sw.WriteAsync(json);
             }
         }
 
@@ -143,13 +139,13 @@ namespace UTC2_Student.API
             {
             };
             string json = JsonConvert.SerializeObject(account, Formatting.Indented);
-            using (var fs = new FileStream(AccountDataPath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
-            {
-                using (StreamWriter sw = new StreamWriter(fs))
+            //using (var fs = new FileStream(AuthModelDataPath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+            //{
+                using (StreamWriter sw = new StreamWriter(AuthModelDataPath, false))
                 {
                     await sw.WriteAsync(json);
                 }
-            }
+            //}
         }
 
         #endregion
@@ -179,7 +175,7 @@ namespace UTC2_Student.API
 
             using (var fs = new FileStream(IdHocPhanPath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))
             {
-                using(var fr = new StreamReader(fs))
+                using (var fr = new StreamReader(fs))
                 {
                     jsonText = await fr.ReadToEndAsync();
                 }
@@ -210,9 +206,9 @@ namespace UTC2_Student.API
 
             string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
 
-            using(var fs = new FileStream(IdHocPhanPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            using (var fs = new FileStream(IdHocPhanPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
             {
-                using (var sw = new StreamWriter(fs)) 
+                using (var sw = new StreamWriter(fs))
                 {
                     await sw.WriteAsync(json);
                 }
@@ -220,17 +216,6 @@ namespace UTC2_Student.API
         }
 
         #endregion
-
-
-        //public static void RemoveAccount()
-        //{
-        //    string filePath = @"\Data\account.json";
-
-        //    using (StreamWriter sw = new StreamWriter(filePath, false))
-        //    {
-        //        sw.Write(string.Empty);
-        //    }
-        //}
 
         public static void ClearData()
         {

@@ -83,11 +83,11 @@ namespace UTC2_Student.MVVM.ViewModels
             Email = AuthModel.Instance!.result[0].dieN_THOAI_DD!;
             KhicaN_BANTINCHO_AI_DIACHI = AuthModel.Instance!.result[0].khicaN_BANTINCHO_AI_DIACHI!;
 
-            DangXuatCommand = new RelayCommand(ExecuteDangXuatCommand);
+            DangXuatCommand = new AsyncRelayCommand(ExecuteDangXuatCommand);
             NavigaeDoiMKCommand = new RelayCommand(ExecuteNavigaeDoiMKCommand);
         }
 
-        private void ExecuteDangXuatCommand(object obj)
+        private async Task ExecuteDangXuatCommand(object obj)
         {
             var r = System.Windows.MessageBox.Show("Bạn có muốn đăng xuất","Đăng xuất", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxImage.Question);
 
@@ -96,8 +96,8 @@ namespace UTC2_Student.MVVM.ViewModels
                 return;
             }
 
-            DataHelper.ClearAccount();
-            DataHelper.ClearAuthModel();
+            await DataHelper.ClearAccount();
+            await DataHelper.ClearAuthModel();
 
             WindowStore.LoginView!.Left = WindowStore.MainWindow!.Left;
             WindowStore.LoginView.Top = WindowStore.MainWindow.Top;
