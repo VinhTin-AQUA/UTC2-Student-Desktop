@@ -21,9 +21,10 @@ namespace UTC2_Student
             Init();
             Loading loading = new Loading();
             loading.Show();
+
             if (await CheckLogin() == false)
             {
-                WindowStore.LoginView.Left = loading.Left;
+                WindowStore.LoginView!.Left = loading.Left;
                 WindowStore.LoginView.Top = loading.Top;
                 WindowStore.LoginView.Width = loading.Width;
                 WindowStore.LoginView.Height = loading.Height;
@@ -31,14 +32,13 @@ namespace UTC2_Student
             }
             else
             {
-                WindowStore.MainWindow.Left = loading.Left;
+                WindowStore.MainWindow!.Left = loading.Left;
                 WindowStore.MainWindow.Top = loading.Top;
                 WindowStore.MainWindow.Width = loading.Width;
                 WindowStore.MainWindow.Height = loading.Height;
                 WindowStore.MainWindow.Show();
             }
             loading.Close();
-            //WindowStore.MainWindow.Show();
         }
 
         private void Init()
@@ -47,32 +47,24 @@ namespace UTC2_Student
             {
                 Directory.CreateDirectory(DataHelper.DataDirectory);
             } 
-
-            if(File.Exists(DataHelper.AccountDataPath) == false)
-            {
-                File.Create(DataHelper.AccountDataPath);
-            }
-
-            if (File.Exists(DataHelper.AuthModelDataPath) == false)
-            {
-                File.Create(DataHelper.AuthModelDataPath);
-            }
-
-            if (File.Exists(DataHelper.IdHocPhanPath) == false)
-            {
-                File.Create(DataHelper.IdHocPhanPath);
-            }
         }
 
         private async Task<bool> CheckLogin()
         {
-            DataHelper.ReadAccount();
-            DataHelper.ReadAuthModel();
+            try
+            {
+                await DataHelper.ReadAccount();
+                await DataHelper.ReadAuthModel();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
-            if(LoginModel.Instance!.MSSV == "" ||
-                LoginModel.Instance.Password == "" ||
-                AuthModel.Instance!.result == null ||
-                AuthModel.Instance.v == null)
+            if (LoginModel.Instance!.MSSV == "" ||
+                    LoginModel.Instance.Password == "" ||
+                    AuthModel.Instance!.result == null ||
+                    AuthModel.Instance.v == null)
             {
                 return false;
             }

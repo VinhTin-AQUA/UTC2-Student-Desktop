@@ -65,80 +65,127 @@ namespace UTC2_Student.API
             }
         }
 
-
         #region account
-        public static void SaveAccount()
+        public static async Task SaveAccount()
         {
             string json = JsonConvert.SerializeObject(LoginModel.Instance, Formatting.Indented);
-            File.WriteAllText(AccountDataPath, json);
+            using (FileStream fs = new FileStream(AccountDataPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    await sw.WriteAsync(json);
+                }
+            }
         }
 
-        public static void ReadAccount()
+        public static async Task ReadAccount()
         {
-            string jsonText = File.ReadAllText(AccountDataPath);
+            string jsonText = "";
+            using (FileStream fs = new FileStream(AccountDataPath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))
+            {
+                using (StreamReader sr = new StreamReader(fs))
+                {
+                    jsonText = await sr.ReadToEndAsync();
+                }
+            }
             LoginModel.Instance = JsonConvert.DeserializeObject<LoginModel>(jsonText);
         }
 
 
-        public static void ClearAccount()
+        public static async Task ClearAccount()
         {
             var account = new
             {
             };
-
             string json = JsonConvert.SerializeObject(account, Formatting.Indented);
-            File.WriteAllText(AccountDataPath, json);
+            using (var fs = new FileStream(AccountDataPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    await sw.WriteAsync(json);
+                }
+            }
         }
 
         #endregion
 
         #region auth model
 
-        public static void SaveAuthModel()
+        public static async Task SaveAuthModel()
         {
             string json = JsonConvert.SerializeObject(AuthModel.Instance, Formatting.Indented);
-            string path = DataHelper.AuthModelDataPath;
-            File.WriteAllText(path, json);
+            using (var fs = new FileStream(AuthModelDataPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    await sw.WriteAsync(json);
+                }
+            }
         }
 
-        public static void ReadAuthModel()
+        public static async Task ReadAuthModel()
         {
-            string jsonText = File.ReadAllText(AuthModelDataPath);
-            AuthModel.Instance = JsonConvert.DeserializeObject<AuthModel>(jsonText);
+            string jsonText = "";
+            using (FileStream fs = new FileStream(AuthModelDataPath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))
+            {
+                using (StreamReader sr = new StreamReader(fs))
+                {
+                    jsonText = await sr.ReadToEndAsync();
+                }
+            }
+            LoginModel.Instance = JsonConvert.DeserializeObject<LoginModel>(jsonText);
         }
 
-        public static void ClearAuthModel()
+        public static async Task ClearAuthModel()
         {
             var account = new
             {
             };
-
             string json = JsonConvert.SerializeObject(account, Formatting.Indented);
-            File.WriteAllText(AuthModelDataPath, json);
+            using (var fs = new FileStream(AccountDataPath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    await sw.WriteAsync(json);
+                }
+            }
         }
 
         #endregion
 
-
         #region id hoc phan
 
-        public static void SaveIdHocPhans(HocPhanDaChon hocPhanDaChon)
+        public static async Task SaveIdHocPhans(HocPhanDaChon hocPhanDaChon)
         {
-            ObservableCollection<HocPhanDaChon> hocPhanDaChons = ReadIdHocPhans();
-
+            ObservableCollection<HocPhanDaChon> hocPhanDaChons = await ReadIdHocPhans();
             if (hocPhanDaChons.Any(p => p.Id == hocPhanDaChon.Id) == false)
             {
                 hocPhanDaChons.Add(hocPhanDaChon);
             }
-
             string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
-            File.WriteAllText(IdHocPhanPath, json);
+            using (var fs = new FileStream(IdHocPhanPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (var fw = new StreamWriter(fs))
+                {
+                    await fw.WriteAsync(json);
+                }
+            }
         }
 
-        public static ObservableCollection<HocPhanDaChon> ReadIdHocPhans()
+        public static async Task<ObservableCollection<HocPhanDaChon>> ReadIdHocPhans()
         {
-            string jsonText = File.ReadAllText(IdHocPhanPath);
+            string jsonText = "";
+
+            using (var fs = new FileStream(IdHocPhanPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                using(var fr = new StreamReader(fs))
+                {
+                    jsonText = await fr.ReadToEndAsync();
+                }
+            }
+
             ObservableCollection<HocPhanDaChon>? hocPhanDaChons = JsonConvert.DeserializeObject<ObservableCollection<HocPhanDaChon>>(jsonText);
+
             if (hocPhanDaChons == null)
             {
                 return new ObservableCollection<HocPhanDaChon>();
@@ -146,9 +193,9 @@ namespace UTC2_Student.API
             return hocPhanDaChons;
         }
 
-        public static void RemoveIdHocPhans(List<string> ids)
+        public static async Task RemoveIdHocPhans(List<string> ids)
         {
-            ObservableCollection<HocPhanDaChon> hocPhanDaChons = ReadIdHocPhans();
+            ObservableCollection<HocPhanDaChon> hocPhanDaChons = await ReadIdHocPhans();
 
             foreach (var p in ids)
             {
@@ -161,12 +208,17 @@ namespace UTC2_Student.API
             }
 
             string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
-            File.WriteAllText(IdHocPhanPath, json);
+
+            using(var fs = new FileStream(IdHocPhanPath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (var sw = new StreamWriter(fs)) 
+                {
+                    await sw.WriteAsync(json);
+                }
+            }
         }
 
         #endregion
-
-
 
 
         //public static void RemoveAccount()

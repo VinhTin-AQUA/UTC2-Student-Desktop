@@ -42,11 +42,16 @@ namespace UTC2_Student.MVVM.ViewModels.DKHP
         public DangKyViewModel()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            HocPhans = DataHelper.ReadIdHocPhans();
+            _ReadIdHocPhan();
             IdHocPhanXoa = new List<string>();
             HocPhanDaChonStore.HocPhans = HocPhans;
             DangKyCommand = new AsyncRelayCommand(ExecuteDangKyCommand);
             XoaIdHocPhanCommand = new RelayCommand(ExecuteXoaIdHocPhanCommand);
+        }
+
+        public async void _ReadIdHocPhan()
+        {
+            HocPhans = await DataHelper.ReadIdHocPhans();
         }
 
         private async Task ExecuteDangKyCommand(object obj)
