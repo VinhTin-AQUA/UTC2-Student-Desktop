@@ -42,25 +42,25 @@
 ## Hình ảnh
 
 * 🖼️ Xem thông báo
-    ![](DOCs\Images\thong_bao.png)(&lt;img /&gt;)
+    ![](DOCs/Images/thong_bao.png)
 
 * 🖼️ Xem kết quả đăng ký học phần
-    ![](DOCs\Images\ket_qua_DKHP.png)(&lt;img /&gt;)
+    ![](DOCs/Images/ket_qua_DKHP.png)
 
 * 🖼️ Xem các lớp học phần đăng ký
-    ![](DOCs\Images\chon_mon_DK.png)(&lt;img /&gt;)
+    ![](DOCs/Images/chon_mon_DK.png)
 
 * 🖼️ Xem các lớp học phần đã chọn
-    ![](DOCs\Images\cac_mon_duoc_chon.png)(&lt;img /&gt;)
+    ![](DOCs/Images/cac_mon_duoc_chon.png)
 
 * 🖼️ Lịch sử đóng học phí
-    ![](DOCs\Images\lich_su_hoc_phi.png)(&lt;img /&gt;)
+    ![](DOCs/Images/lich_su_hoc_phi.png)
 
 * 🖼️ Lịch thi
-    ![](DOCs\Images\lich_thi.png)(&lt;img /&gt;)
+    ![](DOCs/Images/lich_thi.png)
 
 * 🖼️ Ký túc xá
-    ![](DOCs\Images\ktx.png)(&lt;img /&gt;)
+    ![](DOCs/Images/ktx.png)
 
 * 🖼️ Thông tin cá nhân
-    ![](DOCs\Images\thong_tin_ca_nhan.png)(&lt;img /&gt;)
+    ![](DOCs/Images/thong_tin_ca_nhan.png)
