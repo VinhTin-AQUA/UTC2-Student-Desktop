@@ -44,7 +44,13 @@ namespace UTC2_Student.MVVM.ViewModels
         public async Task GetLichSuKTX()
         {
             var r = await ApiRepository.Ins.GetLichSuKTX();
-            if( r == null )
+
+            if (r == null)
+            {
+                Status = "Hidden";
+                StatusText = "Visible";
+            }
+            else if( r.Count() <= 0)
             {
                 Status = "Hidden";
                 StatusText = "Visible";

@@ -10,12 +10,13 @@ namespace UTC2_Student.API
 {
     public static class DataHelper
     {
-        private static readonly string dataDirectory = @"./Data";
+        private static readonly string dataDirectory = Directory.GetCurrentDirectory() + @"/Data";
 
         private static readonly string accountDataPath = @"/account.json";
 
         private static readonly string authModelDataPath = @"/auth_model.json";
         private static readonly string idHocPhanPath = @"/idHocPhans.json";
+        
 
         public static string DataDirectory
         {
@@ -89,8 +90,8 @@ namespace UTC2_Student.API
                 }
             }
             LoginModel.Instance = JsonConvert.DeserializeObject<LoginModel>(jsonText);
+            int t = 0;
         }
-
 
         public static async Task ClearAccount()
         {
@@ -133,7 +134,7 @@ namespace UTC2_Student.API
                     jsonText = await sr.ReadToEndAsync();
                 }
             }
-            LoginModel.Instance = JsonConvert.DeserializeObject<LoginModel>(jsonText);
+            AuthModel.Instance = JsonConvert.DeserializeObject<AuthModel>(jsonText);
         }
 
         public static async Task ClearAuthModel()

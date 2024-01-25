@@ -16,10 +16,15 @@
             <Setter Property="Width" Value="200"></Setter>
         </Style>
     </UserControl.Resources>
-    
+
     <Grid Background="White">
 
         <TextBlock Text="Bạn chưa đăng ký KTX" 
+                   FontSize="20"
+                   FontWeight="Medium"
+                   VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                   Foreground="#1e40af"
                    Visibility="{Binding StatusText, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
         </TextBlock>
 
@@ -41,9 +46,8 @@
                            FontWeight="Medium"
                            Padding="5"></TextBlock>
             </Grid>
-            
-            <Grid Grid.Row="1">
 
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -53,7 +57,7 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -132,11 +136,7 @@ Grid.Column="1"
 
 
             </Grid>
-            
 
-            
-
-            
         </Grid>
 
     </Grid>
