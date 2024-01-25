@@ -1,4 +1,5 @@
-# 🏫🏫UTC2 Student Desktop - Ứng dụng dành cho sinh viên Trường Đại học Giao thông Vận tải Phân hiệu tại TP. Hồ Chí Minh 🏫🏫
+# 🏫🏫UTC2 Student Desktop 🏫🏫 
+***Ứng dụng dành cho sinh viên Trường Đại học Giao thông Vận tải Phân hiệu tại TP. Hồ Chí Minh***
 
 ## Công nghệ sử dụng
 * 💻 WPF
