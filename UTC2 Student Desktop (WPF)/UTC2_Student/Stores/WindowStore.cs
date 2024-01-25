@@ -12,7 +12,7 @@ namespace UTC2_Student.Stores
         private static MainWindow? mainWinDow = null;
         private static LoginView? loginView = null;
 
-        public static MainWindow MainWindow
+        public static MainWindow? MainWindow
         { 
             get 
             {
@@ -22,9 +22,10 @@ namespace UTC2_Student.Stores
                 }
                 return mainWinDow; 
             } 
+            set { mainWinDow = value; }
         }
 
-        public static LoginView LoginView
+        public static LoginView? LoginView
         {
             get
             {
@@ -34,6 +35,7 @@ namespace UTC2_Student.Stores
                 }
                 return loginView;
             }
+            set { loginView = value; }
         }
     }
 }

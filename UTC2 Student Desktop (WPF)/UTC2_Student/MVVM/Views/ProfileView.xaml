@@ -10,6 +10,37 @@
     <UserControl.DataContext>
         <viewModel:ProfileViewModel></viewModel:ProfileViewModel>
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <Style x:Key="container" TargetType="StackPanel"></Style>
+
+        <Style x:Key="rowContainer" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="Margin" Value="0,0,0,10"></Setter>
+        </Style>
+
+        <Style x:Key="textHeader" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+
+        <Style x:Key="textBinding" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Foreground" Value="#1d4ed8"></Setter>
+        </Style>
+
+        <Style x:Key="btn" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="Margin" Value="0,0,0,10"></Setter>
+        </Style>
+
+
+    </UserControl.Resources>
     
     <Grid Background="Wheat">
 
@@ -31,59 +62,65 @@
 
             <StackPanel Width="400">
 
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
-                    <TextBlock Text="Họ tên: "></TextBlock>
-                    <TextBlock Text="{Binding HoTen}"></TextBlock>
+                <StackPanel Style="{StaticResource rowContainer}">
+                    <TextBlock Style="{StaticResource textHeader}" 
+                               Text="Họ tên: "></TextBlock>
+                    <TextBlock Style="{StaticResource textBinding}" 
+                               Text="{Binding HoTen}"></TextBlock>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
-                    <TextBlock Text="Lớp: "></TextBlock>
-                    <TextBlock Text="{Binding Ma_Lop}"></TextBlock>
+                <StackPanel Style="{StaticResource rowContainer}">
+                    <TextBlock Style="{StaticResource textHeader}"
+                               Text="Lớp: "></TextBlock>
+                    
+                    <TextBlock Style="{StaticResource textBinding}" 
+                               Text="{Binding Ma_Lop}"></TextBlock>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
-                    <TextBlock Text="MSSV: "></TextBlock>
-                    <TextBlock Text="{Binding MA_SINHVIEN}"></TextBlock>
+                <StackPanel Style="{StaticResource rowContainer}">
+                    <TextBlock Style="{StaticResource textHeader}"
+                               Text="MSSV: "></TextBlock>
+                    <TextBlock Style="{StaticResource textBinding}" 
+                               Text="{Binding MA_SINHVIEN}"></TextBlock>
                 </StackPanel>
 
-                <Button Content="Đổi mật khẩu"></Button>
-
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
-                    <TextBlock Text="Ngày sinh: "></TextBlock>
-                    <TextBlock Text="{Binding NgaY_SINH}"></TextBlock>
+                <StackPanel Style="{StaticResource rowContainer}">
+                    <TextBlock Style="{StaticResource textHeader}"
+                               Text="Ngày sinh: "></TextBlock>
+                    <TextBlock Style="{StaticResource textBinding}" 
+                               Text="{Binding NgaY_SINH}"></TextBlock>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
-                    <TextBlock Text="Email: "></TextBlock>
-                    <TextBlock Text="{Binding Email}"></TextBlock>
+                <StackPanel Style="{StaticResource rowContainer}">
+                    <TextBlock Style="{StaticResource textHeader}"
+                               Text="Email: "></TextBlock>
+                    <TextBlock Style="{StaticResource textBinding}" 
+                               Text="{Binding Email}"></TextBlock>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
-                    <TextBlock Text="Số điện thoại: "></TextBlock>
-                    <TextBlock Text="{Binding DieN_THOAI_DD}"></TextBlock>
+                <StackPanel Style="{StaticResource rowContainer}">
+                    <TextBlock Style="{StaticResource textHeader}"
+                               Text="Số điện thoại: "></TextBlock>
+                    <TextBlock Style="{StaticResource textBinding}" 
+                               Text="{Binding DieN_THOAI_DD}"></TextBlock>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
-                    <TextBlock Text="Địa chỉ: "></TextBlock>
-                    <TextBlock Text="{Binding KhicaN_BANTINCHO_AI_DIACHI}"></TextBlock>
+                <StackPanel Style="{StaticResource rowContainer}">
+                    <TextBlock Style="{StaticResource textHeader}"
+                               Text="Địa chỉ: "></TextBlock>
+                    <TextBlock Style="{StaticResource textBinding}" 
+                               Text="{Binding KhicaN_BANTINCHO_AI_DIACHI}"></TextBlock>
                 </StackPanel>
-                
-                <Button Content="Đăng xuất"></Button>
-                
+
+                <Button Style="{StaticResource btn}" 
+                        Content="Đổi mật khẩu"
+                        Background="#fef08a"
+                        Command="{Binding NavigaeDoiMKCommand}"></Button>
+                <Button Style="{StaticResource btn}" 
+                        Content="Đăng xuất"
+                        Background="#fca5a5"
+                        Command="{Binding DangXuatCommand}"></Button>
+
             </StackPanel>
 
         </Grid>

@@ -84,10 +84,11 @@ namespace UTC2_Student.MVVM.ViewModels
             }
             else
             {
-                WindowStore.MainWindow.Left = WindowStore.LoginView.Left;
+                WindowStore.MainWindow!.Left = WindowStore.LoginView!.Left;
                 WindowStore.MainWindow.Top = WindowStore.LoginView.Top;
                 WindowStore.MainWindow.Show();
                 WindowStore.LoginView.Close();
+                WindowStore.LoginView = null;
             }
             CanLogin = true;
         }

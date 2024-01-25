@@ -65,18 +65,12 @@ namespace UTC2_Student.API
             }
         }
 
+
+        #region account
         public static void SaveAccount()
         {
             string json = JsonConvert.SerializeObject(LoginModel.Instance, Formatting.Indented);
-            string path = DataHelper.AccountDataPath;
-            File.WriteAllText(path, json);
-        }
-
-        public static void SaveAuthModel()
-        {
-            string json = JsonConvert.SerializeObject(AuthModel.Instance, Formatting.Indented);
-            string path = DataHelper.AuthModelDataPath;
-            File.WriteAllText(path, json);
+            File.WriteAllText(AccountDataPath, json);
         }
 
         public static void ReadAccount()
@@ -85,17 +79,54 @@ namespace UTC2_Student.API
             LoginModel.Instance = JsonConvert.DeserializeObject<LoginModel>(jsonText);
         }
 
+
+        public static void ClearAccount()
+        {
+            var account = new
+            {
+            };
+
+            string json = JsonConvert.SerializeObject(account, Formatting.Indented);
+            File.WriteAllText(AccountDataPath, json);
+        }
+
+        #endregion
+
+        #region auth model
+
+        public static void SaveAuthModel()
+        {
+            string json = JsonConvert.SerializeObject(AuthModel.Instance, Formatting.Indented);
+            string path = DataHelper.AuthModelDataPath;
+            File.WriteAllText(path, json);
+        }
+
         public static void ReadAuthModel()
         {
             string jsonText = File.ReadAllText(AuthModelDataPath);
             AuthModel.Instance = JsonConvert.DeserializeObject<AuthModel>(jsonText);
         }
 
+        public static void ClearAuthModel()
+        {
+            var account = new
+            {
+            };
+
+            string json = JsonConvert.SerializeObject(account, Formatting.Indented);
+            File.WriteAllText(AuthModelDataPath, json);
+        }
+
+        #endregion
+
+
+        #region id hoc phan
+
         public static void SaveIdHocPhans(HocPhanDaChon hocPhanDaChon)
         {
             ObservableCollection<HocPhanDaChon> hocPhanDaChons = ReadIdHocPhans();
 
-            if(hocPhanDaChons.Any(p => p.Id == hocPhanDaChon.Id) == false)
+            if (hocPhanDaChons.Any(p => p.Id == hocPhanDaChon.Id) == false)
             {
                 hocPhanDaChons.Add(hocPhanDaChon);
             }
@@ -132,6 +163,10 @@ namespace UTC2_Student.API
             string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
             File.WriteAllText(IdHocPhanPath, json);
         }
+
+        #endregion
+
+
 
 
         //public static void RemoveAccount()

@@ -23,5 +23,10 @@ namespace UTC2_Student.MVVM.Views
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Box.Focus();
+        }
     }
 }
