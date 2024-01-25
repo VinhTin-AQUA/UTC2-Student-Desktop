@@ -176,7 +176,7 @@ namespace UTC2_Student.API
         {
             string jsonText = "";
 
-            using (var fs = new FileStream(IdHocPhanPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fs = new FileStream(IdHocPhanPath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))
             {
                 using(var fr = new StreamReader(fs))
                 {
@@ -209,7 +209,7 @@ namespace UTC2_Student.API
 
             string json = JsonConvert.SerializeObject(hocPhanDaChons, Formatting.Indented);
 
-            using(var fs = new FileStream(IdHocPhanPath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+            using(var fs = new FileStream(IdHocPhanPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
             {
                 using (var sw = new StreamWriter(fs)) 
                 {
