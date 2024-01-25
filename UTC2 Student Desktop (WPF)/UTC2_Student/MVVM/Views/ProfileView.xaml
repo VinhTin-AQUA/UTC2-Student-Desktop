@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="UTC2_Student.MVVM.Views.ProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UTC2_Student.MVVM.Views"
+             xmlns:viewModel="clr-namespace:UTC2_Student.MVVM.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModel:ProfileViewModel></viewModel:ProfileViewModel>
+    </UserControl.DataContext>
+    
+    <Grid Background="Wheat">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock Text="Thông tin cá nhân"
+                       FontSize="20"
+                       FontWeight="Medium"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="#1d4ed8"></TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <StackPanel Width="400">
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Text="Họ tên: "></TextBlock>
+                    <TextBlock Text="{Binding HoTen}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Text="Lớp: "></TextBlock>
+                    <TextBlock Text="{Binding Ma_Lop}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Text="MSSV: "></TextBlock>
+                    <TextBlock Text="{Binding MA_SINHVIEN}"></TextBlock>
+                </StackPanel>
+
+                <Button Content="Đổi mật khẩu"></Button>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Text="Ngày sinh: "></TextBlock>
+                    <TextBlock Text="{Binding NgaY_SINH}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Text="Email: "></TextBlock>
+                    <TextBlock Text="{Binding Email}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Text="Số điện thoại: "></TextBlock>
+                    <TextBlock Text="{Binding DieN_THOAI_DD}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Text="Địa chỉ: "></TextBlock>
+                    <TextBlock Text="{Binding KhicaN_BANTINCHO_AI_DIACHI}"></TextBlock>
+                </StackPanel>
+                
+                <Button Content="Đăng xuất"></Button>
+                
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</UserControl>

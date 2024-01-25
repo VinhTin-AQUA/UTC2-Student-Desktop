@@ -16,8 +16,9 @@ namespace UTC2_Student.API
         private static string ketQuaDKApi { get; set; } = "/Partial_DanhSachDaDK";
         private static string danhSachHocPhanApi { get; set; } = "/DanhSach_MonHoc_KNAndMH";
         private static string dangKyApi { get; set; } = "/Luu_KetQuaDangKy";
-
         private static string huyKQDKApi { get; set; } = "/Huy_KetQuaDangKy";
+
+
         #endregion
 
         #region thong bao
@@ -152,6 +153,5 @@ namespace UTC2_Student.API
         }
 
         #endregion
-
     }
 }

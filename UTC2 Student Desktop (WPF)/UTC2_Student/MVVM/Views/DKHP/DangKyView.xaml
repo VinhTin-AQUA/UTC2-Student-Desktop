@@ -92,49 +92,63 @@
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition></RowDefinition>
-                                                    <RowDefinition></RowDefinition>
-                                                </Grid.RowDefinitions>
-
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"></ColumnDefinition>
                                                     <ColumnDefinition></ColumnDefinition>
                                                     <ColumnDefinition Width="200"></ColumnDefinition>
                                                     <ColumnDefinition Width="40"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
+                                                
+                                                <Grid Grid.Column="0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
 
-                                                <TextBlock Grid.Row="0" 
-                                                       Grid.Column="0" 
-                                                       Text="Id học phần: "
-                                                       Style="{StaticResource textHeader}"></TextBlock>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
 
-                                                <TextBlock Grid.Row="0"
-                                                       Grid.Column="1" 
-                                                       Text="{Binding Id}"
-                                                       Style="{StaticResource text}"></TextBlock>
+                                                    <TextBlock Grid.Row="0" 
+                                                                Grid.Column="0" 
+                                                                Text="Id học phần: "
+                                                                Style="{StaticResource textHeader}"></TextBlock>
 
-                                                <TextBlock Grid.Row="1" 
-                                                   Grid.Column="0" 
-                                                   Text="Tên học phần: "
-                                                       Style="{StaticResource textHeader}"></TextBlock>
+                                                    <TextBlock Grid.Row="0"
+                                                                Grid.Column="1" 
+                                                                Text="{Binding Id}"
+                                                                Style="{StaticResource text}"></TextBlock>
 
-                                                <TextBlock Grid.Row="1" 
-                                                   Grid.Column="1" 
-                                                   Text="{Binding Name}"
-                                                       Style="{StaticResource text}"></TextBlock>
+                                                    <TextBlock Grid.Row="1" 
+                                                            Grid.Column="0" 
+                                                            Text="Tên học phần: "
+                                                                Style="{StaticResource textHeader}"></TextBlock>
 
-                                                <TextBlock Grid.RowSpan="2"
-                                                           Grid.Column="2" 
-                                                           Text="{Binding Status, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"
-                                                            Style="{StaticResource text}"></TextBlock>
+                                                    <TextBlock Grid.Row="1" 
+                                                            Grid.Column="1" 
+                                                            Text="{Binding Name}"
+                                                             Style="{StaticResource text}"></TextBlock>
 
-                                                <CheckBox Style="{StaticResource deleteRadio}"
-                                                            Grid.Column="3" Grid.ColumnSpan="4"
+                                                </Grid>
+
+                                                <Grid Grid.Column="1">
+                                                    <TextBlock Grid.RowSpan="4"
+                                                               Grid.Row="0"
+                                                               Grid.Column="2" 
+                                                               Text="{Binding Status, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"
+                                                                Style="{StaticResource text}"></TextBlock>
+                                                </Grid>
+
+                                                <Grid Grid.Column="2">
+                                                    <CheckBox Style="{StaticResource deleteRadio}"
+                                                        Grid.Column="3"
+                                                          Grid.Row="0"
+                                                          Grid.ColumnSpan="4"
                                                           Checked="CheckBox_Checked"
                                                           Unchecked="CheckBox_Unchecked"
                                                           Tag="{Binding Id}">
-                                                </CheckBox>
+                                                    </CheckBox>
+                                                </Grid>
 
                                             </Grid>
                                         </ControlTemplate>

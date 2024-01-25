@@ -45,6 +45,10 @@
             <view:TKBView></view:TKBView>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:ProfileViewModel}">
+            <view:ProfileView></view:ProfileView>
+        </DataTemplate>
+
     </Window.Resources>
 
     <Window.Visibility>
@@ -68,20 +72,30 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" 
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left">
+            <Button Grid.Column="0"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Command="{Binding NavigateProfileCommand}">
+                <StackPanel Orientation="Horizontal" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Cursor="Hand">
 
-                <Image Width="40" 
-                       Source="\Resources\Images\profile.png"
-                       Margin="10,0,0,0"></Image>
+                    <Image Width="40" 
+                           Source="\Resources\Images\profile.png"
+                           Margin="10,0,0,0"></Image>       
 
-                <TextBlock Text="{Binding UserName}"
+                    <TextBlock Text="{Binding UserName}"
                         FontSize="25" 
                            Margin="10,0,0,0"
                            Foreground="White"></TextBlock>
-            </StackPanel>
+                </StackPanel>
+            </Button>
+            
+
+            
 
             <StackPanel Orientation="Horizontal" 
                         Grid.Column="1"

@@ -44,6 +44,7 @@ namespace UTC2_Student.MVVM.ViewModels
         public ICommand NavigateKTXCommand { get; set; }
         public ICommand NavigateDiemCommand { get; set; }
         public ICommand NavigateTKBCommand { get; set; }
+        public ICommand NavigateProfileCommand { get; set; }
 
         #endregion
 
@@ -59,6 +60,7 @@ namespace UTC2_Student.MVVM.ViewModels
             NavigateKTXCommand = new RelayCommand(ExecuteNavigateKTXCommand);
             NavigateDiemCommand = new RelayCommand(ExecuteNavigateDiemCommand);
             NavigateTKBCommand = new RelayCommand(ExecuteNavigateTKBCommand);
+            NavigateProfileCommand = new RelayCommand(ExecuteNavigateProfileCommand);
             UserName = AuthModel.Instance!.result[0].hodem + AuthModel.Instance.result[0].ten;
 
             // default child view
@@ -102,6 +104,11 @@ namespace UTC2_Student.MVVM.ViewModels
         private void ExecuteNavigateTKBCommand(object obj)
         {
             CurrntChildView = new TKBViewModel();
+        }
+
+        private void ExecuteNavigateProfileCommand(object obj)
+        {
+            CurrntChildView = new ProfileViewModel();
         }
         #endregion
     }

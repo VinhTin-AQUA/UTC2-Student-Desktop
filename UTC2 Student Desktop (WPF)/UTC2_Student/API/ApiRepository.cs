@@ -376,9 +376,8 @@ namespace UTC2_Student.Repositories
 
         #endregion
 
-
-        /* private methods */
-        private async Task<HttpResponseMessage> GET(string url, bool hasToken = false)
+    /* private methods */
+    private async Task<HttpResponseMessage> GET(string url, bool hasToken = false)
         {
             HttpResponseMessage? response = null;
 
