@@ -173,7 +173,7 @@ namespace UTC2_Student.Repositories
                     // goi api
                     HttpResponseMessage? response = null;
 
-                    while(true)
+                    while (true)
                     {
                         response = await httpCLient.PostAsync(dangKyUrl, jsonContext);
 
@@ -226,7 +226,7 @@ namespace UTC2_Student.Repositories
                 http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
                 HttpResponseMessage? reponse = null;
 
-                while(true)
+                while (true)
                 {
                     reponse = await http.PostAsync(url, jsonContent);
 
@@ -237,12 +237,12 @@ namespace UTC2_Student.Repositories
                         http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance.v);
                     }
 
-                    if(reponse.IsSuccessStatusCode == false)
+                    if (reponse.IsSuccessStatusCode == false)
                     {
                         continue;
                     }
 
-                    if(reponse.IsSuccessStatusCode)
+                    if (reponse.IsSuccessStatusCode)
                     {
                         var content = await reponse.Content.ReadAsStringAsync();
                         return content;
@@ -255,12 +255,26 @@ namespace UTC2_Student.Repositories
 
         #region thong bao
 
-        public async Task<NotificationResponse?> GetThongBaos(int currentPage = 1)
+        public async Task<NotificationResponse?> GetThongBao(int id, int currentPage = 1)
         {
             using (var httpCLient = new HttpClient())
             {
                 httpCLient.Timeout = TimeSpan.FromDays(10);
-                var url = Urls.GetThongBaoApi(currentPage, 20);
+
+                string url = "";
+                if (id == 0)
+                {
+                    url = Urls.GetThongBaoChungApi(currentPage);
+                }
+                else if (id == 1)
+                {
+                    url = Urls.GetTKBLichThiApi(currentPage);
+                }
+                else if (id == 2)
+                {
+                    url = Urls.GetKeHoachnamHocApi(currentPage);
+                }
+
                 var response = await httpCLient.GetAsync(url);
                 var content = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == HttpStatusCode.OK)
@@ -298,7 +312,7 @@ namespace UTC2_Student.Repositories
                 var r = content.Remove(0, 1);
                 r = r.Remove(r.Length - 1);
                 r = r.Replace("\\", "");
-               
+
                 List<HocPhiModel>? hocPhis = JsonConvert.DeserializeObject<List<HocPhiModel>>(r);
                 return hocPhis;
             }
@@ -323,7 +337,7 @@ namespace UTC2_Student.Repositories
 
             var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
 
-            using(var http = new HttpClient())
+            using (var http = new HttpClient())
             {
                 http.Timeout = TimeSpan.FromDays(10);
                 var response = await http.PostAsync(url, jsonContent);
@@ -332,7 +346,7 @@ namespace UTC2_Student.Repositories
 
                 content = content.Replace("\\/", "/");
                 content = content.Remove(0, 1);
-                content = content.Remove(content.Length-1);
+                content = content.Remove(content.Length - 1);
                 content = content.Replace("\\", "");
                 List<LichThiModel>? list = JsonConvert.DeserializeObject<List<LichThiModel>>(content);
                 return list;
@@ -359,7 +373,7 @@ namespace UTC2_Student.Repositories
                 http.DefaultRequestHeaders.Add("authorization", "646b10fa650c93c024244f49f1a88ac7fft123");
                 var response = await http.PostAsync(url, jsonContent);
 
-                if(response.IsSuccessStatusCode == false)
+                if (response.IsSuccessStatusCode == false)
                 {
                     return null;
                 }
@@ -367,7 +381,7 @@ namespace UTC2_Student.Repositories
                 content = content.Replace("\\/", "/");
                 content = content.Replace("\\", "");
                 content = content.Remove(0, 1);
-                content = content.Remove(content.Length-1);
+                content = content.Remove(content.Length - 1);
 
                 List<LichSuKTX>? list = JsonConvert.DeserializeObject<List<LichSuKTX>>(content);
                 return list;
@@ -376,14 +390,14 @@ namespace UTC2_Student.Repositories
 
         #endregion
 
-    /* private methods */
-    private async Task<HttpResponseMessage> GET(string url, bool hasToken = false)
+        /* private methods */
+        private async Task<HttpResponseMessage> GET(string url, bool hasToken = false)
         {
             HttpResponseMessage? response = null;
 
             using (var http = new HttpClient())
             {
-                if(hasToken == true)
+                if (hasToken == true)
                 {
                     http.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthModel.Instance!.v);
                 }

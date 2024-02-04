@@ -23,11 +23,15 @@ namespace UTC2_Student.API
 
         #region thong bao
 
-        private static string baseWebApi { get; set; } = "https://utc2.edu.vn/api/v1.0";
+        private static string baseWebApi = "https://utc2.edu.vn/api/v1.0";
 
-        private static string getThongBaoApi { get; set; } = "/post";
+        private static string getThongBaoChungApi = "/post";
+        private static string tKBLichThiAPi = "/post";
+        private static string keHoachNamHocApi = "/post";
 
-        private static string getThongBaoWeb { get; set; } = "https://utc2.edu.vn/sinh-vien/thong-bao/";
+        private static string accessThongBaoChungWeb  = "https://utc2.edu.vn/sinh-vien/thong-bao/";
+        private static string accessTKBLichThiWeb = "https://utc2.edu.vn/sinh-vien/thoi-khoa-bieu/";
+        private static string accessKeHoachNamHocWeb = "https://utc2.edu.vn/chi-tiet-bai-viet/";
 
         #endregion
 
@@ -108,21 +112,48 @@ namespace UTC2_Student.API
 
         #region thong bao
 
-        public static string GetThongBaoApi(int currentPage = 1, int pageSize = 10)
+        public static string GetThongBaoChungApi(int currentPage = 1, int pageSize = 20)
         {
             string sortField = "created_at";
             string sortOrder = "DESC";
             string filters = "type%3D%3DSTUDENT_ANNOUNCEMENT%2Cdisplay%3D%3Dtrue%2C%20%20";
             string subCategorys = "";
-
             string _params = $@"?currentPage={currentPage}&pageSize={pageSize}&sortField={sortField}&sortOrder={sortOrder}&filters={filters}&subCategorys={subCategorys}";
 
-            return baseWebApi + getThongBaoApi + _params;
+            return baseWebApi + getThongBaoChungApi + _params;
         }
 
-        public static string GetThongBaoWeb(string url)
+        public static string GetTKBLichThiApi(int currentPage = 1, int pageSize = 20)
         {
-            return getThongBaoWeb + url;
+            string sortField = "created_at";
+            string sortOrder = "DESC";
+            string filters = "type%3D%3DSCHEDULE_ANNOUNCEMENT%2C%20display%3D%3Dtrue%2C%20%20";
+            string subCategorys = "";
+            string _params = $@"?currentPage={currentPage}&pageSize={pageSize}&sortField={sortField}&sortOrder={sortOrder}&filters={filters}&subCategorys={subCategorys}";
+            return baseWebApi + tKBLichThiAPi + _params;
+        }
+
+        public static string GetKeHoachnamHocApi(int currentPage = 1, int pageSize = 20)
+        {
+            string sortField = "created_at";
+            string sortOrder = "DESC";
+            string filters = "type%3D%3DPOST%2Cdisplay%3D%3Dtrue%2C%2C%0A%20%20%20%20%20%20%20%20%2C%0A%20%20%20%20%20%20%20%20";
+            string subCategorys = "c02d0836-3a5b-4eae-99e1-7217018dfa11";
+            string _params = $@"?currentPage={currentPage}&pageSize={pageSize}&sortField={sortField}&sortOrder={sortOrder}&filters={filters}&subCategorys={subCategorys}";
+            return baseWebApi + keHoachNamHocApi + _params;
+        }
+
+        public static string AccessThongBaoChungWeb(string url, int currentUrlId)
+        {
+            if (currentUrlId == 0)
+            {
+                return accessThongBaoChungWeb + url;
+            }
+            else if (currentUrlId == 1)
+            {
+                return accessTKBLichThiWeb + url;
+            }
+            return accessKeHoachNamHocWeb + url;
         }
 
         #endregion
